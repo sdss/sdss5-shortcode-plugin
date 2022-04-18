@@ -3,7 +3,7 @@ function show_coco( $thearguments ) {
 
 	$thehtml = "";
 
-	if (empty($thearguments)) {
+	if (empty($thearguments) | $thearguments == '') {
 		$path = PATH_JSON;
 	} /*elseif (in_array("path", array_keys($thearguments)) {
 		$path = PATH_JSON;
@@ -14,8 +14,8 @@ function show_coco( $thearguments ) {
 	}
 	
     // If the path supplied by the user doesn't come with a trailing slash, add the trailing slash
-	if ( $thearguments['path'][-1] != '/') {
-		$thearguments['path'] = $thearguments['path'] . '/';
+	if ( $path[-1] != '/') {
+		$path = $path . '/';
 	}
 
 	$coco_data_json = @file_get_contents( $path . 'coco.json' );
