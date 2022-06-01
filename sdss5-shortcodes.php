@@ -13,9 +13,11 @@ require_once('affiliations.php');           // Show affiliations
 require_once('coco.php');           // Show CoCo
 require_once('publications.php');           // Show publications
 require_once('architects.php');           // Show architects
+require_once('roles.php');           // Show roles
 
 add_shortcode( 'show_affiliations', 'show_affiliations');
 add_shortcode( 'show_coco', 'show_coco');
 add_shortcode( 'show_publications', 'show_publications');
 add_shortcode( 'show_architects', 'show_architects');
+add_shortcode( 'show_roles', 'show_roles');
 ?>
