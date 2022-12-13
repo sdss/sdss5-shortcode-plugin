@@ -118,7 +118,7 @@ function show_all_vacs($all_vacs, $thehtml, $last_modified, $debug) {
 	return $thehtml;
 }
 
-function show_single_vac($thisvac, $thehtml, $last_modified, $debug) {
+function show_single_vac($thisvac, $thehtml, $debug) {
 		
 		$thehtml .= "<h2>";
 		if ($debug) {
