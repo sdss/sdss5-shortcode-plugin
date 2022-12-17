@@ -3,10 +3,12 @@
  * Plugin Name: SDSS-V Custom Shortcodes
  * Plugin URI: https://www.sdss5.org
  * Description: Parse and display JSON content
- * Version: 0.2
+ * Version: 1.1
  * Text Domain: sdss5-custom-shortcodes
  * Author: Jordan Raddick
  * Author URI: https://www.jordanraddick.com
+ * Version updates:
+ *** 1.1. Fixed special chars in TOC, added hierarchy of headers (h2, h3...) marking in TOC
  */
 
 require_once('affiliations.php');           // Show affiliations
