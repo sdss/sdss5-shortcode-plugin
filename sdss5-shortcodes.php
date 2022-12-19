@@ -9,6 +9,7 @@
  * Author URI: https://www.jordanraddick.com
  * Version updates:
  *** 1.1. Fixed special chars in TOC, added hierarchy of headers (h2, h3...) marking in TOC
+ *** 1.2. TOC: Allow user to specify what side to display TOC on (default left), and what levels to include (default h2, h3, h4 specified by '234')
  */
 
 require_once('affiliations.php');           // Show affiliations
