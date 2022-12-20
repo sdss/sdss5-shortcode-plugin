@@ -3,7 +3,7 @@
  * Plugin Name: SDSS-V Custom Shortcodes
  * Plugin URI: https://www.sdss5.org
  * Description: Parse and display JSON content
- * Version: 1.1
+ * Version: 1.4
  * Text Domain: sdss5-custom-shortcodes
  * Author: Jordan Raddick
  * Author URI: https://www.jordanraddick.com
@@ -11,6 +11,7 @@
  *** 1.1. Fixed special chars in TOC, added hierarchy of headers (h2, h3...) marking in TOC
  *** 1.2. TOC: Allow user to specify what side to display TOC on (default left), and what levels to include (default h2, h3, h4 specified by '234')
  *** 1.3. TOC accordionized! (as long as you have the accordion-blocks plugin installed)
+ *** 1.4. VAC list page formatted
  */
 
 require_once('affiliations.php');           // Show affiliations
