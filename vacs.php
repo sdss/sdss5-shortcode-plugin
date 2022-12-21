@@ -67,22 +67,11 @@ function show_all_vacs($all_vacs, $thehtml, $last_modified, $current_dr, $debug)
 		// TAGS
 		$thehtml .= "<div class='vac-tags'>";
 
-		$thehtml .= "<div class='vac-tags-row'>";
-
 		// category
 		$thehtml .= "<div class='vac-tag vac-category'>".$thisvac['category']."</div>";
 
-		/// surveys
+		// surveys
 		$thehtml .= "<div class='vac-tag vac-survey'>".$thisvac['survey']."</div>";
-
-		$thehtml .= "</div>"; // close this row of vac-tags
-
-
-		$thehtml .= "<div class='vac-tags-row'>";
-		
-
-
-		
 
 		// object type
 		foreach ($thisvac['object_classes'] as $this_obj_type) {
@@ -99,16 +88,12 @@ function show_all_vacs($all_vacs, $thehtml, $last_modified, $current_dr, $debug)
 			$thehtml .= "<div class='vac-tag vac-cas-marvin'>Marvin</div>";
 		}
 
-		$thehtml .= "</div>"; // close this row of vac-tags
-
-		$thehtml .= "<div class='vac-tags-row'>";
 		/// data releases
 		$dr_tags_display = '';
 		foreach (array_reverse($thisvac['data_releases']) as $this_dr) {
 			$dr_tags_display .= ($this_dr == $current_dr) ? "<span class='vac-tag vac-dr vac-dr-latest'>".$this_dr."</span>" : "<span class='vac-tag vac-dr'>".$this_dr."</span>";
 		}
 		$thehtml .= $dr_tags_display;
-		$thehtml .= "</div>"; // close this row of vac-tags
 
 		$thehtml .= "</div>";  // closing class vac-tags
 
@@ -137,8 +122,6 @@ function show_all_vacs($all_vacs, $thehtml, $last_modified, $current_dr, $debug)
 		}
 		$thehtml .= "<div class='vac-authors'>" . $author_display_str."</div>";
 	
-
-
 		// DESCRIPTION
 		$thehtml .= "<div class='vac-description'>".$thisvac['description']."</div>";
 
@@ -159,12 +142,15 @@ function show_all_vacs($all_vacs, $thehtml, $last_modified, $current_dr, $debug)
 
 function show_single_vac($thisvac, $thehtml, $current_dr, $debug) {
 	
-	$sas_base = "https://data.sdss.org/sas/".strtolower($current_dr);
+	$sas_base = "https://data.sdss.org";
+	//$sas_base = "https://data.sdss.org/sas/".strtolower($current_dr);
 
 	$skysever_base = "http://skyserver.sdss.org/".strtolower($current_dr);
 	
 	$skyserver_schema_browser_base = $skysever_base."/MoreTools/browser";
 
+	$thehtml .= "<div class='single-vac'>";
+	
 	$thehtml .= "<h2>";
 	//$thehtml .= "<a href='".$_SERVER['REQUEST_URI']."?vac_id=".$thisvac['id']."'>";
 
@@ -172,7 +158,7 @@ function show_single_vac($thisvac, $thehtml, $current_dr, $debug) {
 		if (in_array($current_dr, $thisvac['data_releases'])) {//(!strpos($thisvac['identifier'], 'V VAC')) {
 			$thehtml .= $thisvac['identifier'].": ";	
 		} else {
-			$thehtml .= $thisvac['$id'].": ";
+			$thehtml .= $thisvac['id'].": ";
 		}
 	}
 	$thehtml .= $thisvac['title'];
@@ -183,19 +169,12 @@ function show_single_vac($thisvac, $thehtml, $current_dr, $debug) {
 	// TAGS
 	$thehtml .= "<div class='vac-tags'>";
 
-	$thehtml .= "<div class='vac-tags-row'>";
-
 	// category
 	$thehtml .= "<div class='vac-tag vac-category'>".$thisvac['category']."</div>";
 
 	/// surveys
 	$thehtml .= "<div class='vac-tag vac-survey'>".$thisvac['survey']."</div>";
 
-	$thehtml .= "</div>"; // close this row of vac-tags
-
-
-	$thehtml .= "<div class='vac-tags-row'>";
-		
 	// object type
 	foreach ($thisvac['object_classes'] as $this_obj_type) {
 		$thehtml .= "<div class='vac-tag vac-object'>".$this_obj_type."</div>";
@@ -223,24 +202,26 @@ function show_single_vac($thisvac, $thehtml, $current_dr, $debug) {
 		$thehtml .= "<div class='vac-tag vac-cas-marvin'>Marvin</div>";
 	}
 
-	$thehtml .= "</div>"; // close this row of vac-tags
 
-	$thehtml .= "<div class='vac-tags-row'>";
+
 	/// data releases
 	$dr_tags_display = '';
 	foreach (array_reverse($thisvac['data_releases']) as $this_dr) {
 		$dr_tags_display .= ($this_dr == $current_dr) ? "<span class='vac-tag vac-dr vac-dr-latest'>".$this_dr."</span>" : "<span class='vac-tag vac-dr'>".$this_dr."</span>";
 	}
 	$thehtml .= $dr_tags_display;
-	$thehtml .= "</div>"; // close this row of vac-tags
 
 	$thehtml .= "</div>";  // closing class vac-tags
 
+
+	// DESCRIPTION
+	$thehtml .= "<div class='single-vac-description'><p>".$thisvac['description']."</p></div>";
+
+
+	// AUTHORS (list them all)
 	$thehtml .= "<div class='vac-authors-full'>".$thisvac['authors']."</div>";
 	
-	// DESCRIPTION
-	$thehtml .= "<div class='vac-description'>".$thisvac['description']."</div>";
-
+	
 
 	// SAS link
 	$thehtml .= "<div class='vac-box vac-sas'>Location on SAS: ";
@@ -257,91 +238,24 @@ function show_single_vac($thisvac, $thehtml, $current_dr, $debug) {
 	$thehtml .= "</div>";
 
 	// www URL
-	if ($thisvac['wwwurl'] != '') {
-		$thehtml .= "<div class='vac-www'>This WWW URL: ".$thisvac['www_url']."</div>";
+	if ($thisvac['www_url'] != '') {
+		$thehtml .= "<div class='vac-www'>This VAC is described in full at  <a href='".$thisvac['www_url']."'>";
+		$thehtml .= str_replace('-', '&#8209;', $thisvac['www_url']);  // replace dash with non-breaking dash
+		$thehtml .= "</a></div>";
 	}
 
 	$thehtml .= "<h3>Abstract</h3>";
 	$thehtml .= "<p>".$thisvac['abstract']."</p>";
 
 	if ($thisvac['publication_ids'] != "") {
-		$thehtml .= "<p><strong>Publication IDs:</strong> ";
-		foreach ($thisvac['publication_ids'] as $thispub) {
-			$thehtml .= $thispub.", ";
-		}
-		$thehtml .= "</p>";
+		$thehtml .= get_publications_text($thisvac['publication_ids']);
 	}
-		
-
-
-		
-
-
-		//$thehtml .= "<p><b>WWW url:</b> ".$thisvac['www_url']."</p>";
-
-/*		$thehtml .= "<p><strong>Survey:</strong> ".$thisvac['survey']."</p>";
-		$thehtml .= "<p><strong>Category:</strong> ".$thisvac['category']."</p>";
-
-		$thehtml .= "<p><strong>Data releases:</strong> ";
-		foreach ($thisvac['data_releases'] as $thisdr) {
-			$thehtml .= $thisdr.", ";
-		}
-		$thehtml .= "</p>";
-
-		$thehtml .= "<p><strong>Object classes:</strong> ";
-		foreach ($thisvac['object_classes'] as $thisdr) {
-			$thehtml .= $thisdr.", ";
-		}
-		$thehtml .= "</p>";
-		
-		$thehtml .= "<p>Data model URL: ".$thisvac['datamodel_url']."</p>";
-		$thehtml .= "<p>SAS folder: ".$thisvac['sas_folder']."</p>";
-
-		if ($thisvac['includes_marvin']) {
-			$thehtml .= "<p>Included in Marvin!</p>";
-		}
-
-		if ($thisvac['includes_cas']) {
-			$thehtml .= "<p>Included in CAS:</p>";
-			$thehtml .= "<ul>";
-			$thehtml .= "<li>CAS table(s): ";
-			foreach ($thisvac['cas_table'] as $this_cas_table) {
-				$thehtml .= $this_cas_table.", ";
-			}
-			$thehtml .= "</li>";
-			//if (count($thisvac['cas_join']) > 0) {
-			if ($thisvac['cas_join'] != "") {
-				$thehtml .= "<li>CAS join(s): ";
-				foreach ($thisvac['cas_join'] as $this_cas_join) {
-					$thehtml .= $this_cas_join.", ";
-				}
-				$thehtml .= "</li>";
-			}
-			$thehtml .= "</ul>";
-		}
-		*/
-		/*
-		$thehtml .= "<h3>Abstract</h3>";
-		$thehtml .= "<p>".$thisvac['abstract']."</p>";
-
-		if ($thisvac['publication_ids'] != "") {
-			$thehtml .= "<p><strong>Publication IDs:</strong> ";
-			foreach ($thisvac['publication_ids'] as $thispub) {
-				$thehtml .= $thispub.", ";
-			}
-			$thehtml .= "</p>";
-		}
-		*/
-		
-		//$thehtml .= "<p><strong>Catalog last modified:</strong> ".$thisvac['modified']."</p>";
-
-
-
 
 		$thehtml .= "<p><strong>Catalog last modified:</strong> ".$thisvac['modified']."</p>";
 
-		$thehtml .= "<p><a href='".explode('?',$_SERVER['REQUEST_URI'])[0]."'>"."Back to list of value-added catalogs"."</a></p>";
+		$thehtml .= "<button class='vac-back-to-list'><a href='".explode('?',$_SERVER['REQUEST_URI'])[0]."'>"."Back to list of value-added catalogs"."</a></button>";
 
+	$thehtml .= "</div>"; // end class single-vac
 	return $thehtml;
 }
 
@@ -355,3 +269,77 @@ function get_single_id_from_url($theuri) {
 
 	return $single_id;
 }
+
+function get_publications_text($pub_ids_array) {
+
+	$publications_data_json = @file_get_contents(  PATH_JSON . 'publications.json' );
+    $publications_data = json_decode( $publications_data_json, true );
+
+	$pubhtml = "<div class='vac-pubs'>";
+	$pubhtml .= "<h3>Publications</h3>";
+
+	//echo PATH_JSON_SDSS4;
+
+
+	$sdss4_publications_data_json = @file_get_contents(  PATH_JSON_SDSS4 . 'publications.json' );
+    $sdss4_publications_data = json_decode( $sdss4_publications_data_json, true );
+
+	$pubhtml .= "<ul class='fa-ul'>";
+
+	foreach ($pub_ids_array as $thispubid) {
+		$found_in_sdss5 = false;
+
+		foreach ($publications_data['publications'] as $thispub) {
+			if (intval($thispub['publication_id']) == $thispubid) {
+				$pubdata = $thispub;
+				$found_in_sdss5 = true;
+				break;
+			}  
+		}
+
+		$found_in_sdss4 = false;
+		if (!$found_in_sdss5) {
+			foreach ($sdss4_publications_data['publications'] as $this_sdss4_pub) {
+				if (intval($this_sdss4_pub['publication_id']) == $thispubid) {
+				$found_in_sdss4 = true;	
+				$pubdata = $this_sdss4_pub;
+					break;
+				}
+			}
+		}
+
+		if ($found_in_sdss5 | $found_in_sdss4) {
+			$dflt_url = ( !empty( $this_pub[ 'adsabs_url' ] ) ) ? $this_pub[ 'adsabs_url' ] : 
+							(( !empty( $this_pub[ 'doi_url' ] ) ) ? $this_pub[ 'doi_url' ] : 
+    						(( !empty( $this_pub[ 'arxiv_url' ] ) ) ? $this_pub[ 'arxiv_url' ] : false )
+						);
+
+			$pubhtml .= "<li><i class='fa-li fa fa-book'></i>";
+
+			if ( $dflt_url ) $pubhtml .= "<a target='_blank' href='$dflt_url' >";
+			$pubhtml .= "<strong>" . $pubdata[ 'title' ] . "</strong>";
+			if ( $dflt_url ) $pubhtml .= "</a>";
+			$pubhtml .= '<br />' . $pubdata[ 'authors' ] .  '. ' ;
+			$pubhtml .= "</li>";
+			if ( $pubdata[ 'journal_reference' ]) {
+						$pubhtml .= $pubdata[ 'journal_reference' ];
+					} else {
+						$pubhtml .= '<em>' . $pubdata[ 'status' ] . '</em>';
+					}
+			if ( !empty($pubdata[ 'adsabs' ] ) ) $pubhtml .= "; <a href='" . $pubdata[ 'adsabs_url' ] . "' target='_blank'>adsabs:" . $pubdata[ 'adsabs' ] . "</a>";
+			if ( !empty($pubdata[ 'doi' ] ))  $pubhtml .= "; <a href='" . $pubdata[ 'doi_url' ] . "' target='_blank'>doi:" . $pubdata[ 'doi' ] . "</a>";
+			if ( !empty($pubdata[ 'arxiv_url' ] ) ) $pubhtml .= "; <a href='" . $pubdata[ 'arxiv_url' ] . "' target='_blank'>arXiv:" . $pubdata[ 'arxiv' ] . "</a>";
+			$pubhtml .= '</li>';
+
+
+			$pubhtml .= "</ul>";  // end of list of VAC publications
+		} else {
+			$pubhtml .= "PUBLICATION ID ".$thispubid." NOT FOUND!";
+		}
+	} 	
+
+	$pubhtml .= "</div>";
+
+	return $pubhtml;
+}
+
