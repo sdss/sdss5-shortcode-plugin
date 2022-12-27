@@ -12,6 +12,7 @@
  *** 1.2. TOC: Allow user to specify what side to display TOC on (default left), and what levels to include (default h2, h3, h4 specified by '234')
  *** 1.3. TOC accordionized! (as long as you have the accordion-blocks plugin installed)
  *** 1.4. VAC list page formatted
+ *** 1.4.1. Fixed link to CAS tables for single VACs that have them
  */
 
 require_once('affiliations.php');           // Show affiliations

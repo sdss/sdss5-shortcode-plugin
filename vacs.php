@@ -41,6 +41,14 @@ function show_all_vacs($all_vacs, $thehtml, $last_modified, $current_dr, $debug)
 	$thethml = "";
 	$thehtml .= "<div class='vaclist'>";
 
+/*	foreach ($all_vacs as $id => $thisvac) {
+		echo "<h2> VAC ".$id.": ".$thisvac['title']." cas_join values: </h2>";
+		foreach ($thisvac['cas_join'] as $thisjoin) {
+			echo "<h3>".$thisjoin."</h3>";
+		}
+		
+	}*/
+
 	foreach ($all_vacs as $id => $thisvac) {
 		
 		if ($cnt % 2 == 1) {
@@ -98,23 +106,23 @@ function show_all_vacs($all_vacs, $thehtml, $last_modified, $current_dr, $debug)
 		$thehtml .= "</div>";  // closing class vac-tags
 
 		// AUTHORS
-		$the_authors = explode( ",", $thisvac['authors']);
-		switch ( count($the_authors) ) {
+		$these_authors = explode( ",", $thisvac['authors']);
+		switch ( count($these_authors) ) {
 			case 0:
 				$author_display_str = "";
 				break;
 			case 1:
-				$author_display_str = $the_authors[0];
+				$author_display_str = $these_authors[0];
 				break;
 			case 2: 
-				if (preg_match('/\s(and)|&\s/', $the_authors[1])) {
-					$author_display_str =  $the_authors[0] . $the_authors[1];
+				if (preg_match('/\s(and)|&\s/', $these_authors[1])) {
+					$author_display_str =  $these_authors[0] . $these_authors[1];
 				} else {
-					$author_display_str =  str_replace(",", "", $the_authors[0]) . " and " . $the_authors[1];
+					$author_display_str =  str_replace(",", "", $these_authors[0]) . " and " . $these_authors[1];
 				}
 				break;
 			default:
-				$author_display_str = $the_authors[0] . " et&nbsp;al.";
+				$author_display_str = $these_authors[0] . " et&nbsp;al.";
 		}
 		// special case fix for catalog 90 (HI-MaNGA DR3)
 		if ($id == 90) {
@@ -141,13 +149,12 @@ function show_all_vacs($all_vacs, $thehtml, $last_modified, $current_dr, $debug)
 }
 
 function show_single_vac($thisvac, $thehtml, $current_dr, $debug) {
+
 	
 	$sas_base = "https://data.sdss.org";
 	//$sas_base = "https://data.sdss.org/sas/".strtolower($current_dr);
 
-	$skysever_base = "http://skyserver.sdss.org/".strtolower($current_dr);
-	
-	$skyserver_schema_browser_base = $skysever_base."/MoreTools/browser";
+	$skysever_base = "http://skyserver.sdss.org/";
 
 	$thehtml .= "<div class='single-vac'>";
 	
@@ -182,28 +189,14 @@ function show_single_vac($thisvac, $thehtml, $current_dr, $debug) {
 
 	// has cas?
 	if ($thisvac['includes_cas']) {
-		if ($thisvac['cas_table'] <> "") {
-			foreach ($thisvac['cas_table'] as $this_cas_table) {
-				//$thehtml .= "<a href='".$skyserver_root."en/help/browser/browser.aspx#&&history=description+".$this_cas_table."+U' target='_blank'>";
-				$thehtml .= "<div class='vac-tag vac-cas-marvin vac-table'>CAS: ";
-					
-				$thehtml .= "<a href='".$skyserver_schema_browser_base."?table=".$this_cas_table."' target='_blank'>";
-				$thehtml .= $this_cas_table;
-				$thehtml .= "</a>";
-				$thehtml .= "</div>";
-			}
-		} else {
-			$thehtml .= "<div class='vac-tag vac-cas-marvin'>Marvin</div>";
-		}
+		$thehtml .= "<div class='vac-tag vac-cas-marvin vac-table'>CAS</div>";
 	}
 
 	// has marvin?
 	if ($thisvac['includes_marvin']) {
 		$thehtml .= "<div class='vac-tag vac-cas-marvin'>Marvin</div>";
 	}
-
-
-
+	
 	/// data releases
 	$dr_tags_display = '';
 	foreach (array_reverse($thisvac['data_releases']) as $this_dr) {
@@ -221,8 +214,6 @@ function show_single_vac($thisvac, $thehtml, $current_dr, $debug) {
 	// AUTHORS (list them all)
 	$thehtml .= "<div class='vac-authors-full'>".$thisvac['authors']."</div>";
 	
-	
-
 	// SAS link
 	$thehtml .= "<div class='vac-box vac-sas'>Location on SAS: ";
 	$thehtml .= "<a href='".$sas_base.$thisvac['sas_folder']."' target='_blank'>";
@@ -239,16 +230,84 @@ function show_single_vac($thisvac, $thehtml, $current_dr, $debug) {
 
 	// www URL
 	if ($thisvac['www_url'] != '') {
-		$thehtml .= "<div class='vac-www'>This VAC is described in full at  <a href='".$thisvac['www_url']."'>";
-		$thehtml .= str_replace('-', '&#8209;', $thisvac['www_url']);  // replace dash with non-breaking dash
+		$thehtml .= "<div class='vac-www'>This VAC is described in full at <br /><a href='".$thisvac['www_url']."'>";
+		$thehtml .= str_replace('/', '/<wbr>', str_replace('-', '&#8209;', $thisvac['www_url']));  // replace dash with non-breaking dash and slash with breaking slash
+		//$thehtml .= str_replace('-', '&#8209;', $thisvac['www_url']);  // replace dash with non-breaking dash
 		$thehtml .= "</a></div>";
 	}
 
+
+	/// CAS information (if any)
+	// has cas?
+	if ($thisvac['includes_cas']) {
+		$thehtml .= "<div class='vac-cas-info'>";
+
+		$thehtml .= "<div class='vac-cas-info-title'>";   // contains both "Catalog Data" title and list of data releases
+		$thehtml .= "<h3>Catalog Data</h3>";
+
+		$thehtml .= "<span class='vac-tags-cas-info'>";
+		/// data releases
+		$dr_tags_display = '';
+		foreach (array_reverse($thisvac['data_releases']) as $this_dr) {
+			$dr_tags_display .= ($this_dr == $current_dr) ? "<span class='vac-tag vac-dr vac-dr-latest'>".$this_dr."</span>" : "<span class='vac-tag vac-dr'>".$this_dr."</span>";
+		}
+		$thehtml .= $dr_tags_display;
+		$thehtml .= "</span>";  // close vac-tags-cas-info class
+		
+		$thehtml .= "</div>";  // close vac-cas-info-title class
+
+
+		$most_recent_dr = array_reverse($thisvac['data_releases'])[0];  // most recent data release in which this data appears
+		
+		// Links to CAS tables
+		if ($thisvac['cas_table'] != '') {
+			$thehtml .= "This dataset appears in ".$most_recent_dr." SkyServer and CasJobs in the following tables:";
+			$thehtml .= "<ul>";
+			foreach ($thisvac['cas_table'] as $this_cas_table) {
+				if (intval(substr($most_recent_dr, 2)) >= 17) {
+					$schema_link = $skysever_base.strtolower($most_recent_dr)."/MoreTools/browser?table=".$this_cas_table;
+				} else if ((intval(substr($most_recent_dr, 2)) >= 9) && (intval(substr($most_recent_dr, 2)) <= 16)) {
+					$schema_link = $skysever_base.strtolower($most_recent_dr)."/en/help/browser/browser.aspx#&&history=description+".$this_cas_table."+U";
+				} else {
+					$schema_link = $skysever_base.strtolower(substr($most_recent_dr, 2));
+				}
+				$thehtml .= "<li><a href='".$schema_link."' target='_blank'>".$this_cas_table."</a></li>";
+			}
+			$thehtml .= "</ul>";
+		}
+
+		/* Links to tables that are joinable */
+		if ($thisvac['cas_join'] != '') {
+			$thehtml .= "This dataset's catalog data can be joined to the following tables:";
+			$thehtml .= "<ul>";
+			foreach ($thisvac['cas_join'] as $this_cas_join) {
+				if (intval(substr($most_recent_dr, 2)) >= 17) {
+					$schema_link = $skysever_base.strtolower($most_recent_dr)."/MoreTools/browser?table=".str_replace('-','_',$this_cas_join);
+				} else if ((intval(substr($most_recent_dr, 2)) >= 9) && (intval(substr($most_recent_dr, 2)) <= 16)) {
+					$schema_link = $skysever_base.strtolower($most_recent_dr)."/en/help/browser/browser.aspx##history=description+".str_replace('-','_',$this_cas_join)."+U";
+				}	else {
+					$schema_link = $skysever_base.strtolower(substr($most_recent_dr, 2));
+				}
+				$thehtml .= "<li><a href='".$schema_link."' target='_blank'>".str_replace('-','_',$this_cas_join)."</a></li>";
+			}
+			$thehtml .= "</ul>";
+		}
+		$thehtml .= "</div>"; // end of vac-cas-info class
+	}
+
+
+	/// ABSTRACT
 	$thehtml .= "<h3>Abstract</h3>";
 	$thehtml .= "<p>".$thisvac['abstract']."</p>";
 
+
+	// PUBLICATIONS (if any)
+
 	if ($thisvac['publication_ids'] != "") {
-		$thehtml .= get_publications_text($thisvac['publication_ids']);
+		$thehtml .= "<div class='vac-pubs'>";
+		$thehtml .= "<h3>Publications</h3>";
+		$thehtml .= get_publications_text($thisvac['publication_ids'], $debug);
+		$thehtml .= "</div>";
 	}
 
 		$thehtml .= "<p><strong>Catalog last modified:</strong> ".$thisvac['modified']."</p>";
@@ -270,13 +329,11 @@ function get_single_id_from_url($theuri) {
 	return $single_id;
 }
 
-function get_publications_text($pub_ids_array) {
+function get_publications_text($pub_ids_array, $debug) {
 
 	$publications_data_json = @file_get_contents(  PATH_JSON . 'publications.json' );
     $publications_data = json_decode( $publications_data_json, true );
 
-	$pubhtml = "<div class='vac-pubs'>";
-	$pubhtml .= "<h3>Publications</h3>";
 
 	//echo PATH_JSON_SDSS4;
 
@@ -284,7 +341,7 @@ function get_publications_text($pub_ids_array) {
 	$sdss4_publications_data_json = @file_get_contents(  PATH_JSON_SDSS4 . 'publications.json' );
     $sdss4_publications_data = json_decode( $sdss4_publications_data_json, true );
 
-	$pubhtml .= "<ul class='fa-ul'>";
+	$pubhtml = "<ul class='fa-ul'>";
 
 	foreach ($pub_ids_array as $thispubid) {
 		$found_in_sdss5 = false;
@@ -334,11 +391,11 @@ function get_publications_text($pub_ids_array) {
 
 			$pubhtml .= "</ul>";  // end of list of VAC publications
 		} else {
-			$pubhtml .= "PUBLICATION ID ".$thispubid." NOT FOUND!";
+			if ($debug) {
+				$pubhtml .= "DEBUG MODE: PUBLICATION ID ".$thispubid." NOT FOUND!";
+			} 
 		}
 	} 	
-
-	$pubhtml .= "</div>";
 
 	return $pubhtml;
 }
