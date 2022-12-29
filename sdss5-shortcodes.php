@@ -14,6 +14,7 @@
  *** 1.4. VAC list page formatted
  *** 1.4.1. VACS: Fixed link to CAS tables for single VACs that have them
  *** 1.4.2. TOC: displays correctly with or without accordion
+ *** 1.5. TOC: added to top button for use with TOC
  */
 
 require_once('affiliations.php');           // Show affiliations
@@ -23,6 +24,8 @@ require_once('architects.php');           // Show architects
 require_once('roles.php');           // Show roles
 require_once('vacs.php');          // Show VACs
 require_once('sdss_toc.php');          // Show within-page table of contents 
+require_once('sdss_to_top.php');          // Button to go to top of page
+
 
 add_shortcode( 'show_affiliations', 'show_affiliations');
 add_shortcode( 'show_coco', 'show_coco');
@@ -31,5 +34,6 @@ add_shortcode( 'show_architects', 'show_architects');
 add_shortcode( 'show_roles', 'show_roles');
 add_shortcode( 'show_vacs', 'show_vacs');
 add_shortcode( 'show_toc', 'show_toc' );
+add_shortcode( 'to_top', 'sdss_to_top' );
 
 ?>
