@@ -49,32 +49,35 @@ function show_toc($atts) {
         $regex = "/<h\d.*>.*\/h\d>/";
         $thetoc = '';
 
-/*        echo $wporg_atts['expanded']."<br />";
-        echo $wporg_atts['expand']."<br />"; */
-        
-
         if (preg_match_all($regex, $content, $matches)) {
            
 
             $thetoc .= "<div class='toc toc-".$wporg_atts['side']."'>";
 
             // put TOC inside accordion, if user wanted an accordion and the plugin is active
+            //$wporg_atts['show_accordion'] = false;
             if ($wporg_atts['show_accordion']) {
                 $accordion_uuid = wp_generate_uuid4();
             
             
                 $thetoc .= '<!-- wp:pb/accordion-item {"titleTag":"h2","scroll":true,"uuid":"'.$accordion_uuid.'"} -->';
             
-                $thetoc .= '<div class="wp-block-pb-accordion-item c-accordion__item js-accordion-item no-js" ';
+                $thetoc .= '<div class="wp-block-pb-accordion-item c-accordion__item js-accordion-item no-js toc-label" ';
                 $thetoc .= 'data-initially-open="'.$wporg_atts['expand'].'" data-click-to-close="true" ';
                 $thetoc .= 'data-auto-close="true" data-scroll="false" data-scroll-offset="0" id="div-id-'.$accordion_uuid.'">';
 
-                $thetoc .= '<div id="at-'.$accordion_uuid.'" class="c-accordion__title js-accordion-controller toc-label" role="button">On this page</div>';
+                //$thetoc .= "On this page";
+
+                $thetoc .= '<div id="at-'.$accordion_uuid.'" ';
+                $thetoc .= 'class="c-accordion__title js-accordion-controller toc-label-accordion" role="button">';
+                $thetoc .= 'On this page';
+                $thetoc .= '</div>'; // end class toc-label-accordion
 
                 $thetoc .= '<div id="ac-'.$accordion_uuid.'" class="c-accordion__content">';
             } else {
-                $thetoc .= '<div class="toc-label" role="button">On this page</div>';
+                $thetoc .= '<div class="toc-label toc-label-inner">On this page</div>'; // if no accordion, style as toc-label-inner
             }
+
             
             $thetoc .= "<ul>";
             //$thetoc .= "<p style='color:red;'>".htmlentities($regex)."</p>";
@@ -122,4 +125,5 @@ function show_toc($atts) {
 
     return;
 }
+
 ?>

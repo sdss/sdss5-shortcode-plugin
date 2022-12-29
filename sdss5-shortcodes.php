@@ -2,8 +2,8 @@
 /**
  * Plugin Name: SDSS-V Custom Shortcodes
  * Plugin URI: https://www.sdss5.org
- * Description: Parse and display JSON content
- * Version: 1.4
+ * Description: Functions for sdss.org: parse and display JSON content, display VACs, create TOCs
+ * Version: 1.4.2
  * Text Domain: sdss5-custom-shortcodes
  * Author: Jordan Raddick
  * Author URI: https://www.jordanraddick.com
@@ -12,7 +12,8 @@
  *** 1.2. TOC: Allow user to specify what side to display TOC on (default left), and what levels to include (default h2, h3, h4 specified by '234')
  *** 1.3. TOC accordionized! (as long as you have the accordion-blocks plugin installed)
  *** 1.4. VAC list page formatted
- *** 1.4.1. Fixed link to CAS tables for single VACs that have them
+ *** 1.4.1. VACS: Fixed link to CAS tables for single VACs that have them
+ *** 1.4.2. TOC: displays correctly with or without accordion
  */
 
 require_once('affiliations.php');           // Show affiliations
