@@ -15,6 +15,7 @@
  *** 1.4.1. VACS: Fixed link to CAS tables for single VACs that have them
  *** 1.4.2. TOC: displays correctly with or without accordion
  *** 1.5. TOC: added to top button for use with TOC
+ *** 1.6. Publications: display tech publications
  */
 
 require_once('affiliations.php');           // Show affiliations
