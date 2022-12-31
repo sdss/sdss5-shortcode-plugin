@@ -4,22 +4,32 @@
 function show_publications($atts) {
 
     $atts = array_change_key_case( (array) $atts, CASE_LOWER );
+    
+    $sdss5_surveys = array('');
+    $sdss4_surveys = array('SDSS-IV General', 'eBOSS', 'APOGEE-2', 'MaNGA', 'MaStar', 'SPIDERS', 'TDSS');
+    $sdss3_surveys = array('BOSS', 'APOGEE', 'MARVELS');
 
     $wporg_atts = shortcode_atts(
 		array(
-            'survey' => 'sdss5',
-			'type' => ''
+            'phase' => 'sdss5',
+			'type' => '',
+            'by_survey' => true,
+            'just_modified_time' => false
 		), $atts
 	);
 
-    if ($wporg_atts['survey'] == 'sdss5') {
+    if ($wporg_atts['just_modified_time']) {  // use this to print only the last modified time
+        return "<p>Last modified: ".$publications_data['modified']."</p>";
+    }
+
+    if ($wporg_atts['phase'] == 'sdss5') {
         $publications_data_json = @file_get_contents(  PATH_JSON . 'publications.json' );
     }
-    elseif (($wporg_atts['survey'] == 'sdss4') || ($wporg_atts['survey'] == 'sdss3')) {
+    elseif (($wporg_atts['phase'] == 'sdss4') || ($wporg_atts['phase'] == 'sdss3')) {
         $publications_data_json = @file_get_contents(  PATH_JSON_SDSS4 . 'publications.json' );
     } else {
-        $thehtml = '<h2><font color="red">ERROR: Survey '.$wporg_atts['survey'].' not found!</font></h2>';
-        return $thehtml;
+        $errorhtml = '<h2><font color="red">ERROR: Phase '.$wporg_atts['phase'].' not found!</font></h2>';
+        return $errorhtml;
     }
 
     $publications_data = json_decode( $publications_data_json, true );
@@ -33,41 +43,98 @@ function show_publications($atts) {
         $these_publications = $publications_data['publications'];
     }
 
-    if ($wporg_atts['survey'] == 'sdss4') {
+    if ($wporg_atts['phase'] == 'sdss5') {
+        $these_publications = $publications_data['publications'];
+    } elseif ($wporg_atts['phase'] == 'sdss4') {
         $these_publications = array_filter($publications_data['publications'], "is_sdss4");
-    } elseif ($wporg_atts['survey'] == 'sdss3') {
+    } elseif ($wporg_atts['phase'] == 'sdss3') {
         $these_publications = array_filter($publications_data['publications'], "is_sdss3");
     } else {
-        $these_publications = $publications_data['publications'];
+        $errorhtml = '<h2><font color="red">ERROR: No publications JSON link found for phase '.$wporg_atts['phase'].'</font></h2>';
+        return $errorhtml;
     }
     
-    foreach ($these_publications as $this_pub):
-        $dflt_url = ( !empty( $this_pub[ 'adsabs_url' ] ) ) ? $this_pub[ 'adsabs_url' ] : 
-                        (( !empty( $this_pub[ 'doi_url' ] ) ) ? $this_pub[ 'doi_url' ] : 
-    					(( !empty( $this_pub[ 'arxiv_url' ] ) ) ? $this_pub[ 'arxiv_url' ] : false )
-                    );
+    if ($wporg_atts['by_survey']) {
 
-        $thehtml .= "<li>".$this_pub['survey'].": "; // $thehtml .= "<li><i class='fa-li fa fa-book'></i>";   // when we get font awesome glyphs to work
+        if ($wporg_atts['phase'] == 'sdss5') {
+            $these_surveys = $sdss5_surveys;
+        } elseif ($wporg_atts['phase'] == 'sdss4') {
+            $these_surveys = $sdss4_surveys;
+        } elseif ($wporg_atts['phase'] == 'sdss3') {
+            $these_surveys = $sdss3_surveys;
+        } else {
+            $errorhtml =  '<h2><font color="red">ERROR: No surveys found for phase '.$wporg_atts['phase'].'</font></h2>';
+            return $errorhtml;
+        }
 
-        if ( $dflt_url ) $thehtml .= "<a target='_blank' href='$dflt_url' >";
-        $thehtml .= "<strong>" . $this_pub[ 'title' ] . "</strong>";
-        if ( $dflt_url ) $thehtml .= "</a>";
-        $thehtml .= '<br />' . $this_pub[ 'authors' ] .  '. ' ;
-        $thehtml .= "</li>";
-        if ( $this_pub[ 'journal_reference' ]) {
-			        $thehtml .= $this_pub[ 'journal_reference' ];
-		        } else {
-			        $thehtml .= '<em>' . $this_pub[ 'status' ] . '</em>';
-		        }
-        if ( !empty($this_pub[ 'adsabs' ] ) ) $thehtml .= "; <a href='" . $this_pub[ 'adsabs_url' ] . "' target='_blank'>adsabs:" . $this_pub[ 'adsabs' ] . "</a>";
-        if ( !empty($this_pub[ 'doi' ] ))  $thehtml .= "; <a href='" . $this_pub[ 'doi_url' ] . "' target='_blank'>doi:" . $this_pub[ 'doi' ] . "</a>";
-        if ( !empty($this_pub[ 'arxiv_url' ] ) ) $thehtml .= "; <a href='" . $this_pub[ 'arxiv_url' ] . "' target='_blank'>arXiv:" . $this_pub[ 'arxiv' ] . "</a>";
-        $thehtml .= '</li>';
-    endforeach;
+        $this_survey_publications = array();
+        foreach ($these_surveys as $this_survey) {
+            if ($this_survey != "") {  // print out name of survey as header, if survey has a name
+                if ($this_survey == 'SDSS-IV General') {
+                    $thehtml .= "<h3>General</h3>";
+                } else {
+                    $thehtml .= '<h3>'.$this_survey.'</h3>';
+                }
+            }
+            if (($this_survey == '') && ($wporg_atts['phase'] == 'sdss5')) { $this_survey_publications = $these_publications; 
+            } elseif ($this_survey == 'SDSS-IV General') { $this_survey_publications = array_filter($these_publications, 'is_sdss4_general');   // get publications for each survey
+            } elseif ($this_survey == 'eBOSS') { $this_survey_publications = array_filter($these_publications, 'is_eboss');
+            } elseif ($this_survey == 'APOGEE-2') { $this_survey_publications = array_filter($these_publications, 'is_apogee2');
+            } elseif ($this_survey == 'MaNGA') { $this_survey_publications = array_filter($these_publications, 'is_manga');
+            } elseif ($this_survey == 'MaStar') { $this_survey_publications = array_filter($these_publications, 'is_mastar');
+            } elseif ($this_survey == 'SPIDERS') { $this_survey_publications = array_filter($these_publications, 'is_spiders');
+            } elseif ($this_survey == 'TDSS') { $this_survey_publications = array_filter($these_publications, 'is_tdss');
+            } elseif ($this_survey == 'BOSS') { $this_survey_publications = array_filter($these_publications, 'is_boss');
+            } elseif ($this_survey == 'APOGEE') { $this_survey_publications = array_filter($these_publications, 'is_apogee');
+            } elseif ($this_survey == 'MARVELS') { $this_survey_publications = array_filter($these_publications, 'is_marvels');
+            } else {
+                $errorhtml =  '<h2><font color="red">ERROR: Survey '.$this_survey.' not found!</font></h2>';
+                return $errorhtml;
+            }
+            foreach ($this_survey_publications as $this_pub) {
+                $thehtml .= display_this_pub($this_pub);
+            }
+        } 
+
+    } else {  // if not separating out surveys
+        foreach ($these_publications as $this_pub) {
+            $thehtml .= display_this_pub($this_pub);
+        }
+    }
+
     $thehtml .= "</ul>";
-    $thehtml .= "<p>Last modified: ".$publications_data['modified']."</p>";
+
 
     return $thehtml;
+}
+
+
+function display_this_pub($this_pub) {
+    $thishtml = '';
+
+    $dflt_url = ( !empty( $this_pub[ 'adsabs_url' ] ) ) ? $this_pub[ 'adsabs_url' ] : 
+            (( !empty( $this_pub[ 'doi_url' ] ) ) ? $this_pub[ 'doi_url' ] : 
+    	    (( !empty( $this_pub[ 'arxiv_url' ] ) ) ? $this_pub[ 'arxiv_url' ] : false )
+        );
+
+    $thishtml .= "<li>"; // $thehtml .= "<li><i class='fa-li fa fa-book'></i>";   // when we get font awesome glyphs to work
+
+    if ( $dflt_url ) $thishtml .= "<a target='_blank' href='$dflt_url' >";
+    $thishtml .= "<strong>" . $this_pub[ 'title' ] . "</strong>";
+    if ( $dflt_url ) $thishtml .= "</a>";
+    $thishtml .= '<br />' . $this_pub[ 'authors' ] .  '. ' ;
+    $thishtml .= "</li>";
+    if ( $this_pub[ 'journal_reference' ]) {
+			    $thishtml .= $this_pub[ 'journal_reference' ];
+		    } else {
+			    $thishtml .= '<em>' . $this_pub[ 'status' ] . '</em>';
+		    }
+    if ( !empty($this_pub[ 'adsabs' ] ) ) $thishtml .= "; <a href='" . $this_pub[ 'adsabs_url' ] . "' target='_blank'>adsabs:" . $this_pub[ 'adsabs' ] . "</a>";
+    if ( !empty($this_pub[ 'doi' ] ))  $thishtml .= "; <a href='" . $this_pub[ 'doi_url' ] . "' target='_blank'>doi:" . $this_pub[ 'doi' ] . "</a>";
+    if ( !empty($this_pub[ 'arxiv_url' ] ) ) $thishtml .= "; <a href='" . $this_pub[ 'arxiv_url' ] . "' target='_blank'>arXiv:" . $this_pub[ 'arxiv' ] . "</a>";
+    $thishtml .= '</li>';
+
+    return $thishtml;
 }
 
 function is_tech_paper($var) {
@@ -79,7 +146,7 @@ function is_tech_paper($var) {
 }
 
 function is_sdss4($var) {
-    $sdss4_surveys = array('APOGEE-2', 'MaNGA', 'MaStar', 'SDSS-IV General', 'SPIDERS', 'TDSS', 'eBOSS');
+    $sdss4_surveys = array('SDSS-IV General', 'eBOSS', 'APOGEE-2', 'MaNGA', 'MaStar', 'SPIDERS', 'TDSS');
     if (in_array($var['survey'], $sdss4_surveys)) {
         return true;
     } else {
@@ -88,13 +155,24 @@ function is_sdss4($var) {
 }
 
 function is_sdss3($var) {
-    $sdss3_surveys = array('APOGEE', 'BOSS', 'MARVELS');
+    $sdss3_surveys = array('BOSS', 'APOGEE', 'MARVELS');
     if (in_array($var['survey'], $sdss3_surveys)) {
         return true;
     } else {
         return false;
     }
 }
+
+function is_sdss4_general($var) { if ($var['survey'] == 'SDSS-IV General') { return true; } else { return false; } }
+function is_eboss($var) { if ($var['survey'] == 'eBOSS') { return true; } else { return false; } }
+function is_apogee2($var) { if ($var['survey'] == 'APOGEE-2') { return true; } else { return false; } }
+function is_manga($var) { if ($var['survey'] == 'MaNGA') { return true; } else { return false; } }
+function is_mastar($var) { if ($var['survey'] == 'MaStar') { return true; } else { return false; } }
+function is_spiders($var) { if ($var['survey'] == 'SPIDERS') { return true; } else { return false; } }
+function is_tdss($var) { if ($var['survey'] == 'TDSS') { return true; } else { return false; } }
+function is_boss($var) { if ($var['survey'] == 'BOSS') { return true; } else { return false; } }
+function is_apogee($var) { if ($var['survey'] == 'APOGEE') { return true; } else { return false; } }
+function is_marvels($var) { if ($var['survey'] == 'MARVELS') { return true; } else { return false; } }
 
 
 // sdss5 publications array keys:
