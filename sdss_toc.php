@@ -1,7 +1,7 @@
 <?php
 
 function show_toc($atts) {
-
+    //echo "<font color='red'>".$atts['side']."</font>";
     $atts = array_change_key_case( (array) $atts, CASE_LOWER );
 
     $wporg_atts = shortcode_atts(
@@ -46,11 +46,14 @@ function show_toc($atts) {
     
     add_filter('the_content', function ($content) use ($wporg_atts) {
 
-        $regex = "/<h\d.*>.*\/h\d>/";
+        $regex = "/<h\d.*?>.*?\/h\d>/";
+
         $thetoc = '';
 
+        //return "<font color='red'>".$content."</font>";
+        //echo "<font color='red'>regex = ".$regex."</font>";
         if (preg_match_all($regex, $content, $matches)) {
-           
+           //echo "<font color='red'>regex = REGEX FOUND</font>";
 
             $thetoc .= "<div class='toc toc-".$wporg_atts['side']."'>";
 
@@ -103,6 +106,8 @@ function show_toc($atts) {
                         }
                         $thetoc .= "</li>";
                     }
+                    
+                //$thetoc .= "<li>".$thistag."</li>";
                 }
             }
             $thetoc .= '</ul>';
@@ -114,14 +119,11 @@ function show_toc($atts) {
             }
 
             $thetoc .= '</div>';   // end TOC div
-            
-
-
           
             $content =  $thetoc . $content;
         }
         return $content;
-    }, 99, 1);
+    }, 9999, 1);
 
     return;
 }
