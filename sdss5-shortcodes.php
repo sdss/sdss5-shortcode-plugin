@@ -3,7 +3,7 @@
  * Plugin Name: SDSS-V Custom Shortcodes
  * Plugin URI: https://www.sdss5.org
  * Description: Functions for sdss.org: parse and display JSON content, display VACs, create TOCs
- * Version: 1.7.1
+ * Version: 1.7.2
  * Text Domain: sdss5-custom-shortcodes
  * Author: Jordan Raddick
  * Author URI: https://www.jordanraddick.com
@@ -18,6 +18,7 @@
  *** 1.6. Publications: display tech publications
  *** 1.7. Publications: separate publications by phases and surveys
  *** 1.7.1. Publications: tech papers work with SDSS-IV
+ *** 1.7.2. Publications: show/hide full author list
  */
 
 require_once('affiliations.php');           // Show affiliations

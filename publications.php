@@ -3,6 +3,7 @@
 
 function show_publications($atts) {
 
+    
     $atts = array_change_key_case( (array) $atts, CASE_LOWER );
     
     $sdss5_surveys = array('');
@@ -48,9 +49,6 @@ function show_publications($atts) {
 
 
     $thehtml = "";
-
-
-//    $thehtml .= set_up_author_javascript();
 
     if ($wporg_atts['phase'] == 'sdss5') {
         $these_publications = $publications_data['publications'];
@@ -160,14 +158,14 @@ function display_this_pub($this_pub) {
     $thishtml .= "<strong>" . $this_pub[ 'title' ] . "</strong>";
     if ( $dflt_url ) $thishtml .= "</a>";
 
-    //$thishtml .= '<br />';
-    //$thishtml .= parse_authors()
-
     $thishtml .= '<br />';
-//    $thishtml .= '<span class="authors-short" id="authors-short-'.$this_pub['publication_id'].'">';
-//    $thishtml .= parse_authors($this_pub['authors'], $this_pub['publication_id']);
-//    $thishtml .= '</span>';
-    $thishtml .= $this_pub['authors'];
+    $thishtml .= '<span class="authors-short" id="authors-short-'.$this_pub['publication_id'].'">';
+    $thishtml .= parse_authors($this_pub['authors'], $this_pub['publication_id']);
+    $thishtml .= '</span>';
+    $thishtml .= '<span class="authors-all" id="authors-all-'.$this_pub['publication_id'].'">';
+    $thishtml .= $this_pub['authors'] . " <a href='#pub-".$this_pub['publication_id']."' onclick='javascript:hide_all_authors(".$this_pub['publication_id'].");event.preventDefault();'> (Hide full author list)</a>";
+    $thishtml .= '</span>';
+
     $thishtml .= ". ";
 
     if ( $this_pub[ 'journal_reference' ]) {
@@ -206,8 +204,7 @@ function parse_authors($authorlist, $pid) {
 			break;
 		default:
             $nMores = $nAuthors - 1;
-			//$author_display_str = $these_authors[0] ." <a href='#pub-".$pid."' onclick='javascript:hello();'>et&nbsp;al. (".$nMores." more)</a>";
-            $author_display_str = $these_authors[0]." <a href='#pub-".$pid."' onclick='javascript:hello(".$pid.");event.preventDefault();'>et&nbsp;al. (".$nMores." more)</a>";
+            $author_display_str = $these_authors[0]." <a href='#pub-".$pid."' onclick='javascript:show_all_authors(".$pid.");event.preventDefault();'>et&nbsp;al. (".$nMores." more)</a>";
 	}
     return $author_display_str;
 }
@@ -252,17 +249,6 @@ function is_marvels($var) { if ($var['survey'] == 'MARVELS') { return true; } el
 
 
 function boolify($var) {if (strtolower($var) == 'true') {return true;} else {return false;}}
-
-
-
-function set_up_author_javascript() {
-    $jsifier = "<script type='text/javascript'>";
-    $jsifier .= "function hello(pid) {";
-    $jsifier .= "alert('Hello world pid');";
-    $jsifier .= "}";
-    $jsifier .= "</script>";
-    return $jsifier;
-}
 
 
 
