@@ -3,7 +3,7 @@
  * Plugin Name: SDSS-V Custom Shortcodes
  * Plugin URI: https://www.sdss5.org
  * Description: Functions for sdss.org: parse and display JSON content, display VACs, create TOCs
- * Version: 1.7.2
+ * Version: 2.0
  * Text Domain: sdss5-custom-shortcodes
  * Author: Jordan Raddick
  * Author URI: https://www.jordanraddick.com
@@ -19,6 +19,7 @@
  *** 1.7. Publications: separate publications by phases and surveys
  *** 1.7.1. Publications: tech papers work with SDSS-IV
  *** 1.7.2. Publications: show/hide full author list
+ *** 2.0. VACs: filtering code added
  */
 
 require_once('affiliations.php');           // Show affiliations
@@ -27,6 +28,7 @@ require_once('publications.php');           // Show publications
 require_once('architects.php');           // Show architects
 require_once('roles.php');           // Show roles
 require_once('vacs.php');          // Show VACs
+require_once('vac-search.php');          // Search and filter controls for VACs
 require_once('sdss_toc.php');          // Show within-page table of contents 
 require_once('sdss_to_top.php');          // Button to go to top of page
 
@@ -39,5 +41,5 @@ add_shortcode( 'show_roles', 'show_roles');
 add_shortcode( 'show_vacs', 'show_vacs');
 add_shortcode( 'show_toc', 'show_toc' );
 add_shortcode( 'to_top', 'sdss_to_top' );
-
+add_shortcode( 'vac_search', 'vac_search');
 ?>

@@ -2,9 +2,8 @@
 
 function show_vacs( $thearguments ) {
 
-	//global $debug;
 	$debug = ( defined( 'WP_DEBUG' ) && ( WP_DEBUG ) );
-	$current_dr_number = 18;
+	$current_dr_number = CURRENT_DR;
 	$current_dr = "DR".strval($current_dr_number);
 
 
@@ -23,6 +22,8 @@ function show_vacs( $thearguments ) {
 	}
 	krsort($all_vacs);
 
+	$nvacs = count($all_vacs);
+	
 	
 	$thehtml = "";
 
@@ -37,32 +38,24 @@ function show_vacs( $thearguments ) {
 
 function show_all_vacs($all_vacs, $thehtml, $last_modified, $current_dr, $debug) {
 
-	$cnt = 1;
 	$thethml = "";
 	$thehtml .= "<div class='vaclist'>";
 
-/*	foreach ($all_vacs as $id => $thisvac) {
-		echo "<h2> VAC ".$id.": ".$thisvac['title']." cas_join values: </h2>";
-		foreach ($thisvac['cas_join'] as $thisjoin) {
-			echo "<h3>".$thisjoin."</h3>";
-		}
-		
-	}*/
-
 	foreach ($all_vacs as $id => $thisvac) {
 		
-		if ($cnt % 2 == 1) {
-			$side = 'left';
-		} else {
-			$side = 'right';
-		}
+		$thisvactags = get_vac_tags($thisvac);
 
-		$thehtml .= "<div class='vac vac-".$side."'>";
+		$thehtml .= "<div class='vac ";
+		foreach ($thisvactags as $tagi) {
+			$thehtml .= $tagi ." ";
+		}
+		$thehtml .= "'>";
+		
 		$thehtml .= "<h2>";
 		$thehtml .= "<a href='".$_SERVER['REQUEST_URI']."?vac_id=".$thisvac['id']."'>";
 
 		if ($debug) {
-			if (in_array($current_dr, $thisvac['data_releases'])) {//(!strpos($thisvac['identifier'], 'V VAC')) {
+			if (in_array($current_dr, $thisvac['data_releases'])) {
 				$thehtml .= $thisvac['identifier'].": ";	
 			} else {
 				$thehtml .= $id.": ";
@@ -78,6 +71,7 @@ function show_all_vacs($all_vacs, $thehtml, $last_modified, $current_dr, $debug)
 		// category
 		$thehtml .= "<div class='vac-tag vac-category'>".$thisvac['category']."</div>";
 
+		
 		// surveys
 		$thehtml .= "<div class='vac-tag vac-survey'>".$thisvac['survey']."</div>";
 
@@ -96,7 +90,7 @@ function show_all_vacs($all_vacs, $thehtml, $last_modified, $current_dr, $debug)
 			$thehtml .= "<div class='vac-tag vac-cas-marvin'>Marvin</div>";
 		}
 
-		/// data releases
+		// data releases
 		$dr_tags_display = '';
 		foreach (array_reverse($thisvac['data_releases']) as $this_dr) {
 			$dr_tags_display .= ($this_dr == $current_dr) ? "<span class='vac-tag vac-dr vac-dr-latest'>".$this_dr."</span>" : "<span class='vac-tag vac-dr'>".$this_dr."</span>";
@@ -135,10 +129,11 @@ function show_all_vacs($all_vacs, $thehtml, $last_modified, $current_dr, $debug)
 
 		$thehtml .= "</div>"; // close vac class
 
+		/*
 		if ($cnt % 2 == 0) {
 			$thehtml .= "<div class='clearfix'></div>";
 		}
-		$cnt = $cnt + 1;
+		$cnt = $cnt + 1; */
 	}
 
 	$thehtml .= "</div>";  // close vaclist class
@@ -400,3 +395,27 @@ function get_publications_text($pub_ids_array, $debug) {
 	return $pubhtml;
 }
 
+function get_vac_tags($thisvac) {
+
+	$thetags = array();
+	if ($thisvac['includes_cas']) {
+		array_push($thetags, 'vac-tag-cas-yes');
+	} else {
+		array_push($thetags, 'vac-tag-cas-no');
+	}
+	if ($thisvac['includes_marvin']) {
+		array_push($thetags, 'vac-tag-marvin-yes');
+	} else {
+		array_push($thetags, 'vac-tag-marvin-no');
+	}	foreach ($thisvac['data_releases'] as $this_vac_dr_i) {
+		array_push($thetags, 'vac-tag-'.strtolower($this_vac_dr_i));
+	}
+	//foreach ($thisvac['survey'] as $this_vac_survey_i) {
+	array_push($thetags, 'vac-tag-'.strtolower($thisvac['survey']));
+	//}
+	foreach ($thisvac['object_classes'] as $this_vac_obj_i) {
+		array_push($thetags, 'vac-tag-'.strtolower($this_vac_obj_i));
+	}
+	//print_r($thetags);
+	return $thetags;
+}
