@@ -4,10 +4,10 @@ function vac_search() {
 	$thehtml .= "<div class='vac-search-title'>Value Added Catalogs</div>";
 	$thehtml .= "<div class='vac-counts'>Showing <span id='vac-count-visible'></span> of <span id='vac-count-all'></span></div>";
 	
-	$thehtml .= "<div class='vac-search-textbox-and-label'>";
+/*	$thehtml .= "<div class='vac-search-textbox-and-label'>";
 	$thehtml .= "<label for='vac-search-box'>Search</label>";
 	$thehtml .= "<input type='text' id='vac-search-box' name='vac-search-box'>";
-	$thehtml .= "</div>";   // end vac-search-textbox class
+	$thehtml .= "</div>";   // end vac-search-textbox class */
 
 
 	$thehtml .= "<div class='vac-filter-all-checkboxes'>";

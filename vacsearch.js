@@ -4,7 +4,8 @@ function show_hide_vac(divname) {
     var cbdiv = document.getElementById(cbdivname);
 
     var thisdivlist = document.getElementsByClassName(divname);
-
+    /*alert(divname);
+    alert(cbdivname);*/
     if (cbdiv.checked) {
         for (let i = 0; i < thisdivlist.length; i++) {
             thisdivlist[i].style.display = 'inline';
@@ -48,28 +49,20 @@ function count_vacs_visible() {
 }
 
 function clear_all_filters() {
-    alldivs = document.getElementsByTagName('input');
-    for (let i = 0; i < alldivs.length; i++) {
-        thename = alldivs[i].className;
-        if (thename == 'vac-filter-checkbox') {
-            alldivs[i].checked = false;
-        }
+    allcbdivs = document.getElementsByClassName('vac-filter-checkbox');
+    for (let i = 0; i < allcbdivs.length; i++) {
+        allcbdivs[i].checked = false;
+        show_hide_vac(allcbdivs[i].id.replace('cb-', ''));
     }
-    visiblediv = document.getElementById('vac-count-visible');
-    visiblediv.innerHTML = '0';
+    count_vacs_visible();
     return;
 }
 
 function select_all_catalogs() {
-    alldivs = document.getElementsByTagName('input');
-    for (let i = 0; i < alldivs.length; i++) {
-        thename = alldivs[i].className;
-        if (thename == 'vac-filter-checkbox') {
-            alldivs[i].checked = true;
-        }
+    allcbdivs = document.getElementsByClassName('vac-filter-checkbox');
+    for (let i = 0; i < allcbdivs.length; i++) {
+        allcbdivs[i].checked = true;
+        show_hide_vac(allcbdivs[i].id.replace('cb-', ''));
     }
-    allvaclist = document.getElementsByClassName('vac');
-    visiblediv = document.getElementById('vac-count-visible');
-    visiblediv.innerHTML = allvaclist.length;
-    return;
+    count_vacs_visible();
 }
