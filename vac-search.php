@@ -79,7 +79,7 @@ function vac_search() {
 	$thehtml .= "<div class='vac-filter-checkbox-list'>";
 	$thehtml .= "<span class='vac-filter-checkbox-with-label'>"; 
 	$thehtml .= "<input type='checkbox' id='cb-vac-tag-cas-yes' name='cb-vac-tag-cas-yes' checked class='vac-filter-checkbox' onclick='javascript:show_hide_vac(\"vac-tag-cas-yes\");' />";
-	$thehtml .= "<label for='cb-vac-tag-cas-yes'>Has CAS</label>";
+	$thehtml .= "<label for='cb-vac-tag-cas-yes'>CAS</label>";
 	$thehtml .= "</span>";
 	$thehtml .= "<span class='vac-filter-checkbox-with-label'>";
 	$thehtml .= "<input type='checkbox' id='cb-vac-tag-marvin-yes' name='cb-tag-vac-marvin-yes' checked class='vac-filter-checkbox' onclick='javascript:show_hide_vac(\"vac-tag-marvin-yes\");' />";
@@ -88,7 +88,7 @@ function vac_search() {
 	$thehtml .= "</div>";  // end vac-filter-checkbox-list class for CAS/Marvin
 	$thehtml .= "</div>";  // end vac-filter class for CAS/Marvin
 
-	$thehtml .= "<div class='vac-filter'>";
+/*	$thehtml .= "<div class='vac-filter'>";
 	$thehtml .= "Data Releases";
 	$thehtml .= "<div class='vac-filter-checkbox-list'>";
 	$thehtml .= "<span class='vac-filter-checkbox-with-label'>"; 
@@ -141,7 +141,7 @@ function vac_search() {
 	$thehtml .= "</span>";
 	$thehtml .= "</div>";  // end vac-filter-checkbox-list class for data releases
 	$thehtml .= "</div>";  // end vac-filter class for data releases
-
+	*/
 	$thehtml .= "</div>";  // end vac-filter-checkboxes class
 
 	$thehtml .= "<div class='vac-filter-bulk-select'>";

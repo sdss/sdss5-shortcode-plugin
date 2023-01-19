@@ -20,6 +20,7 @@
  *** 1.7.1. Publications: tech papers work with SDSS-IV
  *** 1.7.2. Publications: show/hide full author list
  *** 2.0. VACs: filtering code added
+ *** 2.0.0.1. Commented out data release checkboxes on VAC filtering
  */
 
 require_once('affiliations.php');           // Show affiliations
