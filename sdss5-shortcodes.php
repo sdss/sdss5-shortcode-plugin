@@ -3,24 +3,14 @@
  * Plugin Name: SDSS-V Custom Shortcodes
  * Plugin URI: https://www.sdss5.org
  * Description: Functions for sdss.org: parse and display JSON content, display VACs, create TOCs
- * Version: 2.0
+ * Version: 2.1
  * Text Domain: sdss5-custom-shortcodes
  * Author: Jordan Raddick
  * Author URI: https://www.jordanraddick.com
  * Version updates:
- *** 1.1. Fixed special chars in TOC, added hierarchy of headers (h2, h3...) marking in TOC
- *** 1.2. TOC: Allow user to specify what side to display TOC on (default left), and what levels to include (default h2, h3, h4 specified by '234')
- *** 1.3. TOC accordionized! (as long as you have the accordion-blocks plugin installed)
- *** 1.4. VAC list page formatted
- *** 1.4.1. VACS: Fixed link to CAS tables for single VACs that have them
- *** 1.4.2. TOC: displays correctly with or without accordion
- *** 1.5. TOC: added to top button for use with TOC
- *** 1.6. Publications: display tech publications
- *** 1.7. Publications: separate publications by phases and surveys
- *** 1.7.1. Publications: tech papers work with SDSS-IV
- *** 1.7.2. Publications: show/hide full author list
  *** 2.0. VACs: filtering code added
  *** 2.0.0.1. Commented out data release checkboxes on VAC filtering
+ *** 2.1. Registered new sidebars for news and blog pages
  */
 
 require_once('affiliations.php');           // Show affiliations
@@ -32,6 +22,7 @@ require_once('vacs.php');          // Show VACs
 require_once('vac-search.php');          // Search and filter controls for VACs
 require_once('sdss_toc.php');          // Show within-page table of contents 
 require_once('sdss_to_top.php');          // Button to go to top of page
+require_once('sdss_readmore.php');          // Read more link for manual excerpts in news and blog posts
 
 
 add_shortcode( 'show_affiliations', 'show_affiliations');
@@ -43,4 +34,5 @@ add_shortcode( 'show_vacs', 'show_vacs');
 add_shortcode( 'show_toc', 'show_toc' );
 add_shortcode( 'to_top', 'sdss_to_top' );
 add_shortcode( 'vac_search', 'vac_search');
+add_shortcode( 'readmore', 'read_more_in_excerpt');
 ?>
