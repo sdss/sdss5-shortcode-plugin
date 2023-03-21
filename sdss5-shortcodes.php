@@ -11,6 +11,7 @@
  *** 2.0. VACs: filtering code added
  *** 2.0.0.1. Commented out data release checkboxes on VAC filtering
  *** 2.1. Registered new sidebars for news and blog pages
+ *** 2.1.0.1. Commented out call to readmore (for now)
  */
 
 require_once('affiliations.php');           // Show affiliations
@@ -22,7 +23,7 @@ require_once('vacs.php');          // Show VACs
 require_once('vac-search.php');          // Search and filter controls for VACs
 require_once('sdss_toc.php');          // Show within-page table of contents 
 require_once('sdss_to_top.php');          // Button to go to top of page
-require_once('sdss_readmore.php');          // Read more link for manual excerpts in news and blog posts
+/*require_once('sdss_readmore.php');          // Read more link for manual excerpts in news and blog posts */
 
 
 add_shortcode( 'show_affiliations', 'show_affiliations');
