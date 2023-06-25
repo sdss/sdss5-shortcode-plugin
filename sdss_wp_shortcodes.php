@@ -3,15 +3,12 @@
  * Plugin Name: SDSS-V Custom Shortcodes
  * Plugin URI: https://www.sdss5.org
  * Description: Functions for sdss.org: parse and display JSON content, display VACs, create TOCs
- * Version: 2.1
+ * Version: 3.0
  * Text Domain: sdss5-custom-shortcodes
  * Author: Jordan Raddick
  * Author URI: https://www.jordanraddick.com
  * Version updates:
- *** 2.0. VACs: filtering code added
- *** 2.0.0.1. Commented out data release checkboxes on VAC filtering
- *** 2.1. Registered new sidebars for news and blog pages
- *** 2.1.0.1. Commented out call to readmore (for now)
+ *** 3.0. Renamed and moved JSON locations here (out of wp-config)
  */
 
 require_once('affiliations.php');           // Show affiliations
@@ -36,4 +33,10 @@ add_shortcode( 'show_toc', 'show_toc' );
 add_shortcode( 'to_top', 'sdss_to_top' );
 add_shortcode( 'vac_search', 'vac_search');
 add_shortcode( 'readmore', 'read_more_in_excerpt');
+
+
+// Path to JSONs for publications etc.
+define('PATH_JSON', '/var/www/replicated/sdss5.org/uploads/jsons/');
+define('PATH_JSON_VACS', '/var/www/replicated/sdss.org/uploads/vac-sdss5-json/');
+define('PATH_JSON_SDSS4', '/var/www/replicated/sdss4.org/uploads/jsons/');
 ?>
