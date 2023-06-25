@@ -36,7 +36,7 @@ add_shortcode( 'readmore', 'read_more_in_excerpt');
 
 
 // Path to JSONs for publications etc.
-define('PATH_JSON', '/var/www/replicated/sdss5.org/uploads/jsons/');
-define('PATH_JSON_VACS', '/var/www/replicated/sdss.org/uploads/vac-sdss5-json/');
-define('PATH_JSON_SDSS4', '/var/www/replicated/sdss4.org/uploads/jsons/');
+define('PATH_JSON', '/code/');
+define('PATH_JSON_VACS', '/code/');
+define('PATH_JSON_SDSS4', '/code/');
 ?>
