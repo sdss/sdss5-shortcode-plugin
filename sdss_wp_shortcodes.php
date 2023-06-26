@@ -9,6 +9,7 @@
  * Author URI: https://www.jordanraddick.com
  * Version updates:
  *** 3.0. Renamed and moved JSON locations here (out of wp-config)
+ *** 3.0.1. Fixed link to JSONs in pantheon branch
  */
 
 require_once('affiliations.php');           // Show affiliations
@@ -36,7 +37,8 @@ add_shortcode( 'readmore', 'read_more_in_excerpt');
 
 
 // Path to JSONs for publications etc.
-define('PATH_JSON', '/code/');
-define('PATH_JSON_VACS', '/code/');
-define('PATH_JSON_SDSS4', '/code/');
+define('PATH_JSON', '/code/wp-contents/plugins/sdss_wp_shortcodes/wiki/data/collaboration/organization/');
+define('PATH_JSON_PUBS', '/code/wp-contents/plugins/sdss_wp_shortcodes/wiki/data/collaboration/publications/');
+define('PATH_JSON_VACS', '/code/wp-contents/plugins/sdss_wp_shortcodes/wiki/data/collaboration/vacs/vac-sdss5/');
+define('PATH_JSON_SDSS4', '/code/wp-contents/plugins/sdss_wp_shortcodes/wiki/data/collaboration/vacs/vac-sdss4/');
 ?>

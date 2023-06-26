@@ -15,3 +15,4 @@
  *** 2.1. Registered new sidebars for news and blog pages
  *** 2.1.0.1. Commented out call to readmore (for now)
  *** 3.0. Renamed and moved JSON locations here (out of wp-config)
+ *** 3.0.1. Fixed link to JSONs in pantheon branch
