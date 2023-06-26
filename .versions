@@ -16,3 +16,4 @@
  *** 2.1.0.1. Commented out call to readmore (for now)
  *** 3.0. Renamed and moved JSON locations here (out of wp-config)
  *** 3.0.1. Fixed link to JSONs in pantheon branch
+ *** 3.0.1.1. Actually Fixed link to JSONs in pantheon branch
