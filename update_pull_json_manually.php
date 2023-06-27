@@ -14,8 +14,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     //execThenPrint("cd ..");
     chdir($topdir);
     #execThenPrint("pwd");
-    execThenPrint("git subtree pull --prefix wp-content/sdss_wp_shortcodes/wiki/ https://github.com/sdss/wiki pantheon --squash");
-    execThenPrint("git status");
+    #execThenPrint("git subtree pull --prefix wp-content/sdss_wp_shortcodes/wiki/ https://github.com/sdss/wiki pantheon --squash");
+    execThenPrint("git fetch");
+#    execThenPrint("git status");
     echo "<h1><a href='/update-jsons/'>Return to update page</a></h1>";
   }
 }
