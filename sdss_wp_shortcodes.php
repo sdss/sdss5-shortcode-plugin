@@ -43,12 +43,12 @@ add_shortcode( 'update_pull_json_manually', 'show_json_updater' );
 
 // Path to JSONs for publications etc.
 
-#define('PATH_JSON', '/code/wp-content/plugins/sdss_wp_shortcodes/sdss_org_wp_data/sdss5/json/');
-#define('PATH_JSON_VACS', '/code/wp-content/plugins/sdss_wp_shortcodes/sdss_org_wp_data/sdss5/json/');
-#define('PATH_JSON_SDSS4', '/code/wp-content/plugins/sdss_wp_shortcodes/sdss_org_wp_data/sdss4/json/');
+define('PATH_JSON', '/code/wp-content/plugins/sdss_wp_shortcodes/sdss_org_wp_data/sdss5/json/');
+define('PATH_JSON_VACS', '/code/wp-content/plugins/sdss_wp_shortcodes/sdss_org_wp_data/sdss5/json/');
+define('PATH_JSON_SDSS4', '/code/wp-content/plugins/sdss_wp_shortcodes/sdss_org_wp_data/sdss4/json/');
 
 
-define('PATH_JSON', '/code/wp-content/plugins/sdss_wp_shortcodes/wiki/data/collaboration/organization/');
-define('PATH_JSON_VACS', '/code/wp-content/plugins/sdss_wp_shortcodes/wiki/data/collaboration/vacs/vac-sdss5/');
-define('PATH_JSON_SDSS4', '/code/wp-content/plugins/sdss_wp_shortcodes/wiki/data/collaboration/vacs/vac-sdss4/');
+#define('PATH_JSON', '/code/wp-content/plugins/sdss_wp_shortcodes/wiki/data/collaboration/organization/');
+#define('PATH_JSON_VACS', '/code/wp-content/plugins/sdss_wp_shortcodes/wiki/data/collaboration/vacs/vac-sdss5/');
+#define('PATH_JSON_SDSS4', '/code/wp-content/plugins/sdss_wp_shortcodes/wiki/data/collaboration/vacs/vac-sdss4/');
 ?>
