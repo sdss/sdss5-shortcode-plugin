@@ -6,7 +6,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $name = $_POST['proofbox'];
   if (!empty($name)) {
     echo "<h1>Done!</h1>";
-    chdir('sdss_org_wp_data/sdss5/json/')
+    chdir('sdss_org_wp_data/sdss5/json/');
 #    execThenPrint("git fetch");
     $thisjson = file_get_contents('https://raw.githubusercontent.com/sdss/sdss_org_wp_data/main/sdss5/json/architects.json');
     file_put_contents('architects.json', $thisjson);

@@ -13,6 +13,7 @@
  *** 3.0.1.1. Actually Fixed link to JSONs in pantheon branch
  *** 3.1.1. Updated JSON path to be Joel's new sdss_org_wp_data repository
  *** 3.1.2. Pulling from github raw content, pantheon branch, testing on sdss5 architects
+ *** 3.1.2.1. fml forgot a semicolon
  */
 
 require_once('affiliations.php');           // Show affiliations
