@@ -6,17 +6,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $name = $_POST['proofbox'];
   if (!empty($name)) {
     echo "<h1>Done!</h1>";
-    // Print the exec output inside of a pre element
-    #execThenPrint("git pull https://user:password@bitbucket.org/user/repo.git master");
-    #execThenPrint("git status");
-    $thisdir = getcwd();
-    $topdir = $_SERVER['DOCUMENT_ROOT'];
-    //execThenPrint("cd ..");
-    chdir($topdir);
-    #execThenPrint("pwd");
-    #execThenPrint("git subtree pull --prefix wp-content/sdss_wp_shortcodes/wiki/ https://github.com/sdss/wiki pantheon --squash");
-    execThenPrint("git fetch");
-#    execThenPrint("git status");
+    chdir('sdss_org_wp_data/sdss5/json/')
+#    execThenPrint("git fetch");
+    $thisjson = file_get_contents('https://raw.githubusercontent.com/sdss/sdss_org_wp_data/main/sdss5/json/architects.json');
+    file_put_contents('architects.json', $thisjson);
     echo "<h1><a href='/update-jsons/'>Return to update page</a></h1>";
   }
 }
