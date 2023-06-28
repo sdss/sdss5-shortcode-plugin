@@ -17,3 +17,4 @@
  *** 3.0. Renamed and moved JSON locations here (out of wp-config)
  *** 3.0.1. Fixed link to JSONs in pantheon branch
  *** 3.0.1.1. Actually Fixed link to JSONs in pantheon branch
+ *** 3.1.1. Updated JSON path to be Joel's new sdss_org_wp_data repository
