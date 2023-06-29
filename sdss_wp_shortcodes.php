@@ -3,18 +3,12 @@
  * Plugin Name: SDSS-V Custom Shortcodes
  * Plugin URI: https://www.sdss5.org
  * Description: Functions for sdss.org: parse and display JSON content, display VACs, create TOCs
- * Version: 3.0
+ * Version: 3.1.3
  * Text Domain: sdss5-custom-shortcodes
  * Author: Jordan Raddick
  * Author URI: https://www.jordanraddick.com
  * Version updates:
- *** 3.0. Renamed and moved JSON locations here (out of wp-config)
- *** 3.0.1. Fixed link to JSONs in pantheon branch
- *** 3.0.1.1. Actually Fixed link to JSONs in pantheon branch
- *** 3.1.1. Updated JSON path to be Joel's new sdss_org_wp_data repository
- *** 3.1.2. Pulling from github raw content, pantheon branch, testing on sdss5 architects
- *** 3.1.2.1. fml forgot a semicolon
- *** 3.1.2.2. Adding files for sdss_org_wp_data (but not git dirs), will delete .json files and get them from github.com instead
+ *** 3.1.3. Added directory structure for JSONs, will pull files from https://github.com/sdss/sdss_org_wp_data
  */
 
 require_once('affiliations.php');           // Show affiliations
