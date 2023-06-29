@@ -1,20 +1,30 @@
-
 <?php 
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-  // collect value of input field
-  $name = $_POST['proofbox'];
+if ($_SERVER["REQUEST_METHOD"] == "POST") {    // check whether form has been submitted
+  $name = $_POST['proof'];       
   if (!empty($name)) {
-    echo "<h1>Done!</h1>";
-    chdir('sdss_org_wp_data/sdss5/json/');
-#    execThenPrint("git fetch");
-    $thisjson = file_get_contents('https://raw.githubusercontent.com/sdss/sdss_org_wp_data/main/sdss5/json/architects.json');
-    file_put_contents('architects.json', $thisjson);
-    echo "<h1><a href='/update-jsons/'>Return to update page</a></h1>";
+    $surveys = array("sdss4", "sdss5");
+    $jsonfiles = array('affiliations', 'architects', 'coco', 'project', 'publications', 'roles', 'vacs');
+    chdir('sdss_org_wp_data/');
+    foreach ($surveys as $this_survey) {
+        echo "<p>Getting json files for ".$this_survey."...</p>";
+        chdir($this_survey);
+        chdir('json/');
+        foreach ($jsonfiles as $this_json_file) {
+            $savefilename = $this_json_file.".json";
+            $gitlink = 'https://raw.githubusercontent.com/sdss/sdss_org_wp_data/pantheon/'.$this_survey.'/json/'.$this_json_file.'.json';
+            echo "&nbsp;&nbsp;&nbsp;Saving ".$savefilename."...<br />";
+            file_put_contents($savefilename, file_get_contents($gitlink));
+        }
+        chdir('../../');
+    }
+    $dt = new DateTime("now", new DateTimeZone('America/New_York'));
+    echo "<p>Done at ".$dt->format('m/d/Y, H:i:s')."</p>";
+    echo "<h2><a href='/update-jsons/'>Return to the JSON Updates page</a></h2>";
   }
 }
 
-function execThenPrint($command) {
+/*function execThenPrint($command) {
     $result = array();
     exec($command, $result);
     print("<pre>");
@@ -22,23 +32,17 @@ function execThenPrint($command) {
         print($line . "\n");
     }
     print("</pre>");
-}
-
+}*/
 ?>
-
-
 
 <?php
 function show_json_updater() {
-
-	$thehtml = "<h3>Hello world</h3>";
-	$thehtml .= "<form action='/wp-content/plugins/sdss_wp_shortcodes/update_pull_json_manually.php' method='post'>";
-    $thehtml .= "<input type='textbox' name='proofbox' />Please enter something here";
+    $thehtml .= "<form action='/wp-content/plugins/sdss_wp_shortcodes/update_pull_json_manually.php' method='post'>";
+    $thehtml .= "<input type='hidden' id='proof' name='proof' value=True>";
     $thehtml .= '<div class="clearfix"></div>';
-	$thehtml .= "<input type='submit'>";
+	$thehtml .= "<input type='submit' value='Update JSON files'>";
 	$thehtml .= '<div class="clearfix"></div>';
 	$thehtml .= "</form>";
 	return $thehtml;
 }
-
 ?>

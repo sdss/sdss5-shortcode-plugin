@@ -3,13 +3,12 @@
  * Plugin Name: SDSS-V Custom Shortcodes
  * Plugin URI: https://www.sdss5.org
  * Description: Functions for sdss.org: parse and display JSON content, display VACs, create TOCs
- * Version: 3.1.3.1
+ * Version: 3.1.4
  * Text Domain: sdss5-custom-shortcodes
  * Author: Jordan Raddick
  * Author URI: https://www.jordanraddick.com
  * Version updates:
- *** 3.1.3. Added directory structure for JSONs, will pull files from https://github.com/sdss/sdss_org_wp_data
- *** 3.1.3.1. We need placeholder files in empty dirs for git, I guess?
+ *** 3.1.4. Manual update of JSON files works
  */
 
 require_once('affiliations.php');           // Show affiliations
@@ -22,7 +21,7 @@ require_once('vac-search.php');          // Search and filter controls for VACs
 require_once('sdss_toc.php');          // Show within-page table of contents 
 require_once('sdss_to_top.php');          // Button to go to top of page
 /*require_once('sdss_readmore.php');          // Read more link for manual excerpts in news and blog posts */
-//require_once('update_pull_json.php');          // Make sure JSONs are up to date
+require_once('update_pull_json.php');                   // Make sure JSONs are up to date
 require_once('update_pull_json_manually.php');          // Make sure JSONs are up to date, manual option
 
 
@@ -35,7 +34,8 @@ add_shortcode( 'show_vacs', 'show_vacs');
 add_shortcode( 'show_toc', 'show_toc' );
 add_shortcode( 'to_top', 'sdss_to_top' );
 add_shortcode( 'vac_search', 'vac_search');
-add_shortcode( 'readmore', 'read_more_in_excerpt');
+//add_shortcode( 'readmore', 'read_more_in_excerpt');
+add_shortcode( 'update_pull_json', 'pull_json' );
 add_shortcode( 'update_pull_json_manually', 'show_json_updater' );
 
 
