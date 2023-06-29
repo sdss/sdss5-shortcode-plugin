@@ -14,6 +14,7 @@
  *** 3.1.1. Updated JSON path to be Joel's new sdss_org_wp_data repository
  *** 3.1.2. Pulling from github raw content, pantheon branch, testing on sdss5 architects
  *** 3.1.2.1. fml forgot a semicolon
+ *** 3.1.2.2. Adding files for sdss_org_wp_data (but not git dirs), will delete .json files and get them from github.com instead
  */
 
 require_once('affiliations.php');           // Show affiliations
