@@ -3,13 +3,14 @@
  * Plugin Name: SDSS-V Custom Shortcodes
  * Plugin URI: https://www.sdss5.org
  * Description: Functions for sdss.org: parse and display JSON content, display VACs, create TOCs
- * Version: 3.1.4.1
+ * Version: 3.1.4.2
  * Text Domain: sdss5-custom-shortcodes
  * Author: Jordan Raddick
  * Author URI: https://www.jordanraddick.com
  * Version updates:
  *** 3.1.4. Manual update of JSON files works
  *** 3.1.4.1. Debugging file permission problem
+ *** 3.1.4.2. Changing file permissions back and forth
  */
 
 require_once('affiliations.php');           // Show affiliations

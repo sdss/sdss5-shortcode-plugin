@@ -9,11 +9,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {    // check whether form has been su
     foreach ($surveys as $this_survey) {
         echo "<p>Getting json files for ".$this_survey."...</p>";
         chdir($this_survey);
-        echo "<p>File permissions on json directory:<br />";
-        echo fileperms('json/');
-        echo "<br />";
-        echo parse_file_permissions(fileperms('json/'));
-        echo "</p>";
+//        echo "<p>File permissions on json directory:<br />";
+//        echo fileperms('json/');
+//        echo "<br />";
+//        echo parse_file_permissions(fileperms('json/'));
+//        echo "</p>";
+        echo "<p>Changing directory permissions of json dir...</p>";
+        chnod('json/', 0777);
         chdir('json/');
         #execThenPrint('ls -sal');
         foreach ($jsonfiles as $this_json_file) {
@@ -21,10 +23,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {    // check whether form has been su
             $gitlink = 'https://raw.githubusercontent.com/sdss/sdss_org_wp_data/pantheon/'.$this_survey.'/json/'.$this_json_file.'.json';
             echo "&nbsp;&nbsp;&nbsp;Saving ".$savefilename."...<br />";
             file_put_contents($savefilename, file_get_contents($gitlink));
-            break;
+//            break;
         }
-        chdir('../../');
-        break;
+        echo "<p>Changing directory permissions of json dir back to safe values...</p>";
+        chdir('../')
+        chnod('json/', 0644);
+        chdir('../');
+//        break;
     }
     $dt = new DateTime("now", new DateTimeZone('America/New_York'));
     echo "<p>Done at ".$dt->format('m/d/Y, H:i:s')."</p>";
