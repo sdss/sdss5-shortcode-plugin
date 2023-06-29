@@ -15,7 +15,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {    // check whether form has been su
 //        echo parse_file_permissions(fileperms('json/'));
 //        echo "</p>";
         echo "<p>Changing directory permissions of json dir...</p>";
-        chnod('json/', 0777);
+        chmod('json/', 0777);
         chdir('json/');
         #execThenPrint('ls -sal');
         foreach ($jsonfiles as $this_json_file) {
@@ -27,7 +27,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {    // check whether form has been su
         }
         echo "<p>Changing directory permissions of json dir back to safe values...</p>";
         chdir('../')
-        chnod('json/', 0644);
+        chmod('json/', 0644);
         chdir('../');
 //        break;
     }
