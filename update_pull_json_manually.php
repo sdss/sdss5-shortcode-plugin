@@ -9,14 +9,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {    // check whether form has been su
     foreach ($surveys as $this_survey) {
         echo "<p>Getting json files for ".$this_survey."...</p>";
         chdir($this_survey);
+        echo "<p>File permissions on json directory:<br />";
+        echo fileperms('json/');
+        echo "<br />";
+        echo parse_file_permissions(fileperms('json/'));
+        echo "</p>";
         chdir('json/');
+        #execThenPrint('ls -sal');
         foreach ($jsonfiles as $this_json_file) {
             $savefilename = $this_json_file.".json";
             $gitlink = 'https://raw.githubusercontent.com/sdss/sdss_org_wp_data/pantheon/'.$this_survey.'/json/'.$this_json_file.'.json';
             echo "&nbsp;&nbsp;&nbsp;Saving ".$savefilename."...<br />";
             file_put_contents($savefilename, file_get_contents($gitlink));
+            break;
         }
         chdir('../../');
+        break;
     }
     $dt = new DateTime("now", new DateTimeZone('America/New_York'));
     echo "<p>Done at ".$dt->format('m/d/Y, H:i:s')."</p>";
@@ -24,7 +32,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {    // check whether form has been su
   }
 }
 
-/*function execThenPrint($command) {
+function execThenPrint($command) {
     $result = array();
     exec($command, $result);
     print("<pre>");
@@ -32,7 +40,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {    // check whether form has been su
         print($line . "\n");
     }
     print("</pre>");
-}*/
+}
 ?>
 
 <?php
@@ -44,5 +52,58 @@ function show_json_updater() {
 	$thehtml .= '<div class="clearfix"></div>';
 	$thehtml .= "</form>";
 	return $thehtml;
+}
+
+
+
+function parse_file_permissions($perms) {
+    switch ($perms & 0xF000) {
+        case 0xC000: // socket
+            $info = 's';
+            break;
+        case 0xA000: // symbolic link
+            $info = 'l';
+            break;
+        case 0x8000: // regular
+            $info = 'r';
+            break;
+        case 0x6000: // block special
+            $info = 'b';
+            break;
+        case 0x4000: // directory
+            $info = 'd';
+            break;
+        case 0x2000: // character special
+            $info = 'c';
+            break;
+        case 0x1000: // FIFO pipe
+            $info = 'p';
+            break;
+        default: // unknown
+            $info = 'u';
+    }
+
+    // Owner
+    $info .= (($perms & 0x0100) ? 'r' : '-');
+    $info .= (($perms & 0x0080) ? 'w' : '-');
+    $info .= (($perms & 0x0040) ?
+                (($perms & 0x0800) ? 's' : 'x' ) :
+                (($perms & 0x0800) ? 'S' : '-'));
+
+    // Group
+    $info .= (($perms & 0x0020) ? 'r' : '-');
+    $info .= (($perms & 0x0010) ? 'w' : '-');
+    $info .= (($perms & 0x0008) ?
+                (($perms & 0x0400) ? 's' : 'x' ) :
+                (($perms & 0x0400) ? 'S' : '-'));
+
+    // World
+    $info .= (($perms & 0x0004) ? 'r' : '-');
+    $info .= (($perms & 0x0002) ? 'w' : '-');
+    $info .= (($perms & 0x0001) ?
+                (($perms & 0x0200) ? 't' : 'x' ) :
+                (($perms & 0x0200) ? 'T' : '-'));
+
+    return $info;
 }
 ?>
