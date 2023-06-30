@@ -44,11 +44,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {    // check whether form has been su
 
     //echo "<h2 style='color:red;'>DISALLOW_FILE_MODS = ".get_option(DISALLOW_FILE_MODS)."</h2>";
     echo "<p>Idk maybe trying with git pull...</p>";
+    chdir('/code/');
+    execThenPrint('pwd');
     execThenPrint('git pull');
+
+
+    echo "<p>Idk maybe trying with git subtree pull...</p>";
+    execThenPrint('pwd');
+    echo "trying to execThenPrint('git subtree pull --prefix wp_content/plugins/sdss_wp_shortcodes/ https://github.com/sdss/sdss_wp_shortcodes pantheon --squash'); and it will probably fail....";
+    execThenPrint('git subtree pull --prefix wp_content/plugins/sdss_wp_shortcodes/ https://github.com/sdss/sdss_wp_shortcodes pantheon --squash');
+
 
     //echo "<p>Idk maybe trying with git subtree pull...</p>";
     
-    execThenPrint('git pull');
+#    execThenPrint('git pull');
     $dt = new DateTime("now", new DateTimeZone('America/New_York'));
     echo "<p>Done at ".$dt->format('m/d/Y, H:i:s')."</p>";
     echo "<h2><a href='/update-jsons/'>Return to the JSON Updates page</a></h2>";
