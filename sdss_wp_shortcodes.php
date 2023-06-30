@@ -19,6 +19,7 @@
  *** 3.1.4.8. Trying git pull
  *** 3.1.4.9. Testing directory permissions in git mode
  *** 3.1.5.0. Testing git pull and git subtree pull in git mode
+ *** 3.1.6.0. Starting over completely and putting files in the files directory
  */
 
 require_once('affiliations.php');           // Show affiliations

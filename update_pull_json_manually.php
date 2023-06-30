@@ -3,7 +3,8 @@ echo "<hr />";
 if ($_SERVER["REQUEST_METHOD"] == "POST") {    // check whether form has been submitted
   $name = $_POST['proof'];       
   if (!empty($name)) {
-    $surveys = array("sdss4", "sdss5");
+      echo "<h1>Hello world!</h1>";
+/*    $surveys = array("sdss4", "sdss5");
     $jsonfiles = array('affiliations', 'architects', 'coco', 'project', 'publications', 'roles', 'vacs');
     chdir('sdss_org_wp_data/');
     foreach ($surveys as $this_survey) {
@@ -34,13 +35,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {    // check whether form has been su
 //        break;
     }
 
-/*    echo "<dl>";
+/    echo "<dl>";
     foreach ($_ENV as $k => $v) {
         echo "<dt>".$k."</dt>";
         echo "<dd>".$v."</dd>";
     }
     echo "</dl>";
-    */
+    
 
     //echo "<h2 style='color:red;'>DISALLOW_FILE_MODS = ".get_option(DISALLOW_FILE_MODS)."</h2>";
     echo "<p>Idk maybe trying with git pull...</p>";
@@ -58,10 +59,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {    // check whether form has been su
     //echo "<p>Idk maybe trying with git subtree pull...</p>";
     
 #    execThenPrint('git pull');
+*/
     $dt = new DateTime("now", new DateTimeZone('America/New_York'));
     echo "<p>Done at ".$dt->format('m/d/Y, H:i:s')."</p>";
     echo "<h2><a href='/update-jsons/'>Return to the JSON Updates page</a></h2>";
+      
   }
+
 }
 
 function execThenPrint($command) {
