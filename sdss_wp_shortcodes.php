@@ -12,6 +12,7 @@
  *** 3.1.4.1. Debugging file permission problem
  *** 3.1.4.2. Changing file permissions back and forth
  *** 3.1.4.3. Typo: chnod -> chmod
+ *** 3.1.4.4. Gitignoring json files
  */
 
 require_once('affiliations.php');           // Show affiliations
