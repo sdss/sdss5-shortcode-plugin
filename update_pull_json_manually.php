@@ -1,48 +1,49 @@
 <?php 
-
+echo "<hr />";
 if ($_SERVER["REQUEST_METHOD"] == "POST") {    // check whether form has been submitted
   $name = $_POST['proof'];       
   if (!empty($name)) {
-    echo "<hr />";
-    $surveys = array("sdss5", "sdss4");
+    $surveys = array("sdss4", "sdss5");
     $jsonfiles = array('affiliations', 'architects', 'coco', 'project', 'publications', 'roles', 'vacs');
     chdir('sdss_org_wp_data/');
     foreach ($surveys as $this_survey) {
         echo "<p>Getting json files for ".$this_survey."...</p>";
         chdir($this_survey);
-        echo "<p>File permissions on json directory:<br />";
-        echo fileperms('json/');
-        echo "<br />";
-        echo parse_file_permissions(fileperms('json/'));
-        echo "</p>";
-        #execThenPrint("pwd");
-        #execThenPrint("ls -sal");
-        echo "<p>Changing directory permissions of json dir...</p>";
-        chmod('json/', 0755);
-
-        echo "<p>NEW file permissions on json directory:<br />";
-        echo fileperms('json/');
-        echo "<br />";
-        echo parse_file_permissions(fileperms('json/'));
-        echo "</p>";
-
+//        echo "<p>File permissions on json directory:<br />";
+//        echo fileperms('json/');
+//        echo "<br />";
+//        echo parse_file_permissions(fileperms('json/'));
+//        echo "</p>";
+//        echo "<p>Changing directory permissions of json dir...</p>";
+//        chmod('json/', 0777);
         chdir('json/');
-
+        #execThenPrint('ls -sal');
         foreach ($jsonfiles as $this_json_file) {
-            
             $savefilename = $this_json_file.".json";
-            execThenPrint("rm ".$savefilename);
-            print('yeeted '.$savefilename."...<br />");
             $gitlink = 'https://raw.githubusercontent.com/sdss/sdss_org_wp_data/pantheon/'.$this_survey.'/json/'.$this_json_file.'.json';
             echo "&nbsp;&nbsp;&nbsp;Saving ".$savefilename."...<br />";
             file_put_contents($savefilename, file_get_contents($gitlink));
 //            break;
         }
+//        echo "<p>Changing directory permissions of json dir back to safe values...</p>";
+//        chdir('../')
+//        chmod('json/', 0644);
         execThenPrint('ls -sal');
-        chdir("../../");
+        chdir('../../');
         echo "<hr />";
 //        break;
     }
+
+    /*echo "<dl>";
+    foreach ($_ENV as $k => $v) {
+        echo "<dt>".$k."</dt>";
+        echo "<dd>".$v."</dd>";
+    }
+    echo "</dl>";
+    */
+
+    echo "<h2 style='color:red;'>DISALLOW_FILE_MODS = ".get_option(DISALLOW_FILE_MODS)."</h2>";
+
     $dt = new DateTime("now", new DateTimeZone('America/New_York'));
     echo "<p>Done at ".$dt->format('m/d/Y, H:i:s')."</p>";
     echo "<h2><a href='/update-jsons/'>Return to the JSON Updates page</a></h2>";

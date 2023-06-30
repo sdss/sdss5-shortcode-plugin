@@ -3,7 +3,7 @@
  * Plugin Name: SDSS Custom Shortcodes
  * Plugin URI: https://www.sdss5.org
  * Description: Functions for sdss.org: parse/display/update JSON content, display VACs, create TOCs
- * Version: 3.1.4.6
+ * Version: 3.1.4.7
  * Text Domain: sdss_wp_shortcodes
  * Author: Jordan Raddick
  * Author URI: https://www.jordanraddick.com
@@ -15,6 +15,7 @@
  *** 3.1.4.4. Gitignoring json files
  *** 3.1.4.5. Forgot semicolon fml
  *** 3.1.4.6. Better test of file permissions on json directories
+ *** 3.1.4.7. Epic confusion, maybe I can't do this at all!
  */
 
 require_once('affiliations.php');           // Show affiliations
