@@ -4,6 +4,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {    // check whether form has been su
   $name = $_POST['proof'];       
   if (!empty($name)) {
       echo "<h1>Hello world!</h1>";
+      chdir('/');
+      echo fileperms('files/');
+      echo parse_file_permissions(fileperms('files/'));
 /*    $surveys = array("sdss4", "sdss5");
     $jsonfiles = array('affiliations', 'architects', 'coco', 'project', 'publications', 'roles', 'vacs');
     chdir('sdss_org_wp_data/');

@@ -3,7 +3,7 @@
  * Plugin Name: SDSS Custom Shortcodes
  * Plugin URI: https://www.sdss5.org
  * Description: Functions for sdss.org: parse/display/update JSON content, display VACs, create TOCs
- * Version: 3.1.5.0.
+ * Version: 3.1.6.1.
  * Text Domain: sdss_wp_shortcodes
  * Author: Jordan Raddick
  * Author URI: https://www.jordanraddick.com
@@ -20,6 +20,7 @@
  *** 3.1.4.9. Testing directory permissions in git mode
  *** 3.1.5.0. Testing git pull and git subtree pull in git mode
  *** 3.1.6.0. Starting over completely and putting files in the files directory
+ *** 3.1.6.1. Removing local sdss_org_wp_data dir and using files directory instead per pantheon workflow
  */
 
 require_once('affiliations.php');           // Show affiliations
