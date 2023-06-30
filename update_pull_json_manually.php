@@ -42,8 +42,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {    // check whether form has been su
     echo "</dl>";
     */
 
-    echo "<h2 style='color:red;'>DISALLOW_FILE_MODS = ".get_option(DISALLOW_FILE_MODS)."</h2>";
+    //echo "<h2 style='color:red;'>DISALLOW_FILE_MODS = ".get_option(DISALLOW_FILE_MODS)."</h2>";
+    echo "<p>Idk maybe trying with git pull...</p>";
+    execThenPrint('git pull');
 
+    //echo "<p>Idk maybe trying with git subtree pull...</p>";
+    
+    execThenPrint('git pull');
     $dt = new DateTime("now", new DateTimeZone('America/New_York'));
     echo "<p>Done at ".$dt->format('m/d/Y, H:i:s')."</p>";
     echo "<h2><a href='/update-jsons/'>Return to the JSON Updates page</a></h2>";
