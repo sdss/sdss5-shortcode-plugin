@@ -9,11 +9,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {    // check whether form has been su
     foreach ($surveys as $this_survey) {
         echo "<p>Getting json files for ".$this_survey."...</p>";
         chdir($this_survey);
-//        echo "<p>File permissions on json directory:<br />";
-//        echo fileperms('json/');
-//        echo "<br />";
-//        echo parse_file_permissions(fileperms('json/'));
-//        echo "</p>";
+        echo "<p>File permissions on json directory:<br />";
+        echo fileperms('json/');
+        echo "<br />";
+        echo parse_file_permissions(fileperms('json/'));
+        echo "</p>";
 //        echo "<p>Changing directory permissions of json dir...</p>";
 //        chmod('json/', 0777);
         chdir('json/');
@@ -34,7 +34,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {    // check whether form has been su
 //        break;
     }
 
-    /*echo "<dl>";
+/*    echo "<dl>";
     foreach ($_ENV as $k => $v) {
         echo "<dt>".$k."</dt>";
         echo "<dd>".$v."</dd>";

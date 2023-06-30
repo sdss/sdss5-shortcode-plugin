@@ -3,7 +3,7 @@
  * Plugin Name: SDSS Custom Shortcodes
  * Plugin URI: https://www.sdss5.org
  * Description: Functions for sdss.org: parse/display/update JSON content, display VACs, create TOCs
- * Version: 3.1.4.8
+ * Version: 3.1.4.9
  * Text Domain: sdss_wp_shortcodes
  * Author: Jordan Raddick
  * Author URI: https://www.jordanraddick.com
@@ -17,6 +17,7 @@
  *** 3.1.4.6. Better test of file permissions on json directories
  *** 3.1.4.7. Epic confusion, maybe I can't do this at all!
  *** 3.1.4.8. Trying git pull
+ *** 3.1.4.9. Testing directory permissions in git mode
  */
 
 require_once('affiliations.php');           // Show affiliations
