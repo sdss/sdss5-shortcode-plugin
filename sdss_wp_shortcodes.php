@@ -1,10 +1,10 @@
 <?php
 /**
- * Plugin Name: SDSS-V Custom Shortcodes
+ * Plugin Name: SDSS Custom Shortcodes
  * Plugin URI: https://www.sdss5.org
- * Description: Functions for sdss.org: parse and display JSON content, display VACs, create TOCs
- * Version: 3.1.4.3
- * Text Domain: sdss5-custom-shortcodes
+ * Description: Functions for sdss.org: parse/display/update JSON content, display VACs, create TOCs
+ * Version: 3.1.4.5
+ * Text Domain: sdss_wp_shortcodes
  * Author: Jordan Raddick
  * Author URI: https://www.jordanraddick.com
  * Version updates:
@@ -13,6 +13,7 @@
  *** 3.1.4.2. Changing file permissions back and forth
  *** 3.1.4.3. Typo: chnod -> chmod
  *** 3.1.4.4. Gitignoring json files
+ *** 3.1.4.5. Forgot semicolon fml
  */
 
 require_once('affiliations.php');           // Show affiliations

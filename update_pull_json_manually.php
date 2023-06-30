@@ -26,7 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {    // check whether form has been su
 //            break;
         }
         echo "<p>Changing directory permissions of json dir back to safe values...</p>";
-        chdir('../')
+        chdir('../');
         chmod('json/', 0644);
         chdir('../');
 //        break;
