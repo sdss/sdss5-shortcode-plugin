@@ -29,3 +29,4 @@
  *** 3.1.4.3. Typo: chnod -> chmod
  *** 3.1.4.4. Gitignoring json files
  *** 3.1.4.5. Forgot semicolon fml
+ *** 3.1.4.6. Better test of file permissions on json directories

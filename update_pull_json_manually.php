@@ -3,32 +3,44 @@
 if ($_SERVER["REQUEST_METHOD"] == "POST") {    // check whether form has been submitted
   $name = $_POST['proof'];       
   if (!empty($name)) {
-    $surveys = array("sdss4", "sdss5");
+    echo "<hr />";
+    $surveys = array("sdss5", "sdss4");
     $jsonfiles = array('affiliations', 'architects', 'coco', 'project', 'publications', 'roles', 'vacs');
     chdir('sdss_org_wp_data/');
     foreach ($surveys as $this_survey) {
         echo "<p>Getting json files for ".$this_survey."...</p>";
         chdir($this_survey);
-//        echo "<p>File permissions on json directory:<br />";
-//        echo fileperms('json/');
-//        echo "<br />";
-//        echo parse_file_permissions(fileperms('json/'));
-//        echo "</p>";
+        echo "<p>File permissions on json directory:<br />";
+        echo fileperms('json/');
+        echo "<br />";
+        echo parse_file_permissions(fileperms('json/'));
+        echo "</p>";
+        #execThenPrint("pwd");
+        #execThenPrint("ls -sal");
         echo "<p>Changing directory permissions of json dir...</p>";
-        chmod('json/', 0777);
+        chmod('json/', 0755);
+
+        echo "<p>NEW file permissions on json directory:<br />";
+        echo fileperms('json/');
+        echo "<br />";
+        echo parse_file_permissions(fileperms('json/'));
+        echo "</p>";
+
         chdir('json/');
-        #execThenPrint('ls -sal');
+
         foreach ($jsonfiles as $this_json_file) {
+            
             $savefilename = $this_json_file.".json";
+            execThenPrint("rm ".$savefilename);
+            print('yeeted '.$savefilename."...<br />");
             $gitlink = 'https://raw.githubusercontent.com/sdss/sdss_org_wp_data/pantheon/'.$this_survey.'/json/'.$this_json_file.'.json';
             echo "&nbsp;&nbsp;&nbsp;Saving ".$savefilename."...<br />";
             file_put_contents($savefilename, file_get_contents($gitlink));
 //            break;
         }
-        echo "<p>Changing directory permissions of json dir back to safe values...</p>";
-        chdir('../');
-        chmod('json/', 0644);
-        chdir('../');
+        execThenPrint('ls -sal');
+        chdir("../../");
+        echo "<hr />";
 //        break;
     }
     $dt = new DateTime("now", new DateTimeZone('America/New_York'));
