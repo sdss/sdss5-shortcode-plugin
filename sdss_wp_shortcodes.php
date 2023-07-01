@@ -3,7 +3,7 @@
  * Plugin Name: SDSS Custom Shortcodes
  * Plugin URI: https://www.sdss5.org
  * Description: Functions for sdss.org: parse/display/update JSON content, display VACs, create TOCs
- * Version: 3.1.6.1.
+ * Version: 3.1.6.5
  * Text Domain: sdss_wp_shortcodes
  * Author: Jordan Raddick
  * Author URI: https://www.jordanraddick.com
@@ -24,6 +24,7 @@
  *** 3.1.6.2. That, but actually doing the git rm of the sdss_org_wp_data dir
  *** 3.1.6.3. Listing files in files directory (now I know permissions are right)
  *** 3.1.6.4. Trying git pull in git mode...
+ *** 3.1.6.5. Saving JSON files into /files/sdss_org_wp_data/
  */
 
 require_once('affiliations.php');           // Show affiliations

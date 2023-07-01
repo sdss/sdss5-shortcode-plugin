@@ -4,29 +4,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {    // check whether form has been su
   $name = $_POST['proof'];       
   if (!empty($name)) {
       echo "<h1>Hello world!</h1>";
-      chdir('/');
-      echo fileperms('files/');
-      echo parse_file_permissions(fileperms('files/'));
-      chdir('files/');
-      execThenPrint('pwd');
-      execThenPrint('ls -sal');
-      echo "<p>Lets try a git pull...</p>";
-      execThenPrint('git pull');
-/*    $surveys = array("sdss4", "sdss5");
+      chdir('/files/');
+      if (!file_exists('sdss_org_wp_data')) {
+        make_json_filetree();
+      }
+    $surveys = array("sdss4", "sdss5");
     $jsonfiles = array('affiliations', 'architects', 'coco', 'project', 'publications', 'roles', 'vacs');
     chdir('sdss_org_wp_data/');
+    execThenPrint('pwd');
+    execThenPrint('ls -sal');
     foreach ($surveys as $this_survey) {
         echo "<p>Getting json files for ".$this_survey."...</p>";
         chdir($this_survey);
-        echo "<p>File permissions on json directory:<br />";
-        echo fileperms('json/');
-        echo "<br />";
-        echo parse_file_permissions(fileperms('json/'));
-        echo "</p>";
-//        echo "<p>Changing directory permissions of json dir...</p>";
-//        chmod('json/', 0777);
         chdir('json/');
-        #execThenPrint('ls -sal');
         foreach ($jsonfiles as $this_json_file) {
             $savefilename = $this_json_file.".json";
             $gitlink = 'https://raw.githubusercontent.com/sdss/sdss_org_wp_data/pantheon/'.$this_survey.'/json/'.$this_json_file.'.json';
@@ -37,13 +27,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {    // check whether form has been su
 //        echo "<p>Changing directory permissions of json dir back to safe values...</p>";
 //        chdir('../')
 //        chmod('json/', 0644);
+        execThenPrint('pwd');
         execThenPrint('ls -sal');
         chdir('../../');
         echo "<hr />";
 //        break;
     }
 
-/    echo "<dl>";
+/*    echo "<dl>";
     foreach ($_ENV as $k => $v) {
         echo "<dt>".$k."</dt>";
         echo "<dd>".$v."</dd>";
@@ -62,7 +53,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {    // check whether form has been su
     execThenPrint('pwd');
     echo "trying to execThenPrint('git subtree pull --prefix wp_content/plugins/sdss_wp_shortcodes/ https://github.com/sdss/sdss_wp_shortcodes pantheon --squash'); and it will probably fail....";
     execThenPrint('git subtree pull --prefix wp_content/plugins/sdss_wp_shortcodes/ https://github.com/sdss/sdss_wp_shortcodes pantheon --squash');
-
+    
 
     //echo "<p>Idk maybe trying with git subtree pull...</p>";
     
@@ -75,6 +66,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {    // check whether form has been su
   }
 
 }
+
+function make_json_filetree() {
+    mkdir('sdss_org_wp_data/');
+    chdir('sdss_org_wp_data/');
+    $surveydirs = array('sdss4/', 'sdss5/');
+    foreach ($surveydirs as $thisdir) {
+        mkdir($thisdir);
+        chdir($thisdir);
+        mkdir('json/');
+        chdir('../');
+    }
+    chdir('../');
+    return;
+}
+
 
 function execThenPrint($command) {
     $result = array();
