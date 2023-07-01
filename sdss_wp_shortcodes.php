@@ -23,6 +23,7 @@
  *** 3.1.6.1. Removing local sdss_org_wp_data dir and using files directory instead per pantheon workflow
  *** 3.1.6.2. That, but actually doing the git rm of the sdss_org_wp_data dir
  *** 3.1.6.3. Listing files in files directory (now I know permissions are right)
+ *** 3.1.6.4. Trying git pull in git mode...
  */
 
 require_once('affiliations.php');           // Show affiliations

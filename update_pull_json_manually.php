@@ -10,6 +10,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {    // check whether form has been su
       chdir('files/');
       execThenPrint('pwd');
       execThenPrint('ls -sal');
+      echo "<p>Lets try a git pull...</p>";
+      execThenPrint('git pull');
 /*    $surveys = array("sdss4", "sdss5");
     $jsonfiles = array('affiliations', 'architects', 'coco', 'project', 'publications', 'roles', 'vacs');
     chdir('sdss_org_wp_data/');
