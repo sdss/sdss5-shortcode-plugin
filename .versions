@@ -40,3 +40,4 @@
  *** 3.1.6.3. Listing files in files directory (now I know permissions are right)
  *** 3.1.6.4. Trying git pull in git mode...
  *** 3.1.6.5. Saving JSON files into /files/sdss_org_wp_data/
+ *** 3.1.6.6. Fixed location of JSON files in sdss_wp_shortcodes.php

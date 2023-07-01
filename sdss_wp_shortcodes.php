@@ -3,7 +3,7 @@
  * Plugin Name: SDSS Custom Shortcodes
  * Plugin URI: https://www.sdss5.org
  * Description: Functions for sdss.org: parse/display/update JSON content, display VACs, create TOCs
- * Version: 3.1.6.5
+ * Version: 3.1.6.6
  * Text Domain: sdss_wp_shortcodes
  * Author: Jordan Raddick
  * Author URI: https://www.jordanraddick.com
@@ -25,6 +25,7 @@
  *** 3.1.6.3. Listing files in files directory (now I know permissions are right)
  *** 3.1.6.4. Trying git pull in git mode...
  *** 3.1.6.5. Saving JSON files into /files/sdss_org_wp_data/
+ *** 3.1.6.6. Fixed location of JSON files in sdss_wp_shortcodes.php
  */
 
 require_once('affiliations.php');           // Show affiliations
@@ -57,9 +58,9 @@ add_shortcode( 'update_pull_json_manually', 'show_json_updater' );
 
 // Path to JSONs for publications etc.
 
-define('PATH_JSON', '/code/wp-content/plugins/sdss_wp_shortcodes/sdss_org_wp_data/sdss5/json/');
-define('PATH_JSON_VACS', '/code/wp-content/plugins/sdss_wp_shortcodes/sdss_org_wp_data/sdss5/json/');
-define('PATH_JSON_SDSS4', '/code/wp-content/plugins/sdss_wp_shortcodes/sdss_org_wp_data/sdss4/json/');
+define('PATH_JSON', '/files/sdss_org_wp_data/sdss5/json/');
+define('PATH_JSON_VACS', '/files/sdss_org_wp_data/sdss5/json/');
+define('PATH_JSON_SDSS4', '/files/sdss_org_wp_data/sdss4/json/');
 
 
 #define('PATH_JSON', '/code/wp-content/plugins/sdss_wp_shortcodes/wiki/data/collaboration/organization/');
