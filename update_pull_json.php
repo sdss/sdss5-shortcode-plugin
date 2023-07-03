@@ -1,5 +1,172 @@
 <?php
-	function pull_json() {
-		return;
-	}
+
+// These first 20 lines are used by the page update-jsons
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {    // check whether form has been submitted
+  $name = $_POST['proof'];       
+  if (!empty($name)) {
+      echo "<h1>Hello world!</h1>";
+      echo pull_json($verbose = True);  // verbose = True an html string, verbose = False return nothing
+  }
+}
+
+function show_json_updater() {
+    $thehtml .= "<form action='/wp-content/plugins/sdss_wp_shortcodes/update_pull_json.php' method='post'>";
+    $thehtml .= "<input type='hidden' id='proof' name='proof' value=True>";
+    $thehtml .= '<div class="clearfix"></div>';
+	$thehtml .= "<input type='submit' value='Update JSON files'>";
+	$thehtml .= '<div class="clearfix"></div>';
+	$thehtml .= "</form>";
+	return $thehtml;
+}
+
+
+function pull_json( $verbose = True ) {
+    if ($verbose) {
+        $thehtml = '';
+    }
+
+    if ($verbose) {
+        $thehtml .= "<hr />";
+    }
+    chdir('/files/');
+    if (!file_exists('sdss_org_wp_data/')) {
+        if ($verbose) {
+            $thehtml .= '<p>creating filetree...</p>';
+        }
+        make_json_filetree();
+    }
+    $surveys = array("sdss4", "sdss5");
+    $jsonfiles = array('affiliations', 'architects', 'coco', 'project', 'publications', 'roles', 'vacs');
+    chdir('sdss_org_wp_data/');
+    foreach ($surveys as $this_survey) {
+        if ($verbose) {
+            $thehtml .= "<p>Getting json files for ".$this_survey."...</p>";
+        }
+        chdir($this_survey);
+        chdir('json/');
+        foreach ($jsonfiles as $this_json_file) {
+            $localfilename =  $this_json_file.".json";
+            if (file_exists($localfilename)) {
+                $local_file_mod_time = new DateTime('@' .filemtime($localfilename));
+                if ($verbose) {
+                    $thenow = new DateTime("now");
+                    $interval = date_diff($local_file_mod_time, $thenow);
+                    //$thehtml .= "<p>".$localfilename.":<br />&nbsp;&nbsp;&nbsp;Local file last modified at ".date('Y-m-d h:i:s',$local_file_mod_time)."</p>";
+                    $thehtml .= "<p>".$localfilename.":<br />&nbsp;&nbsp;&nbsp;last modified ".$interval->format('%h hours %m minutes %s seconds')." ago<br />";
+                }
+            } else {
+                if ($verbose) {
+                    $thehtml .= "<p>Fetching file ".$this_json_file." from server";
+                }
+            }
+            
+            $gitlink = 'https://raw.githubusercontent.com/sdss/sdss_org_wp_data/pantheon/'.$this_survey.'/json/'.$this_json_file.'.json';
+            $remote_file_contents = file_get_contents($gitlink);
+            file_put_contents($localfilename, $remote_file_contents);
+            $thehtml .= "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;replaced!";
+        }
+//        execThenPrint('pwd');
+//        execThenPrint('ls -sal');
+        chdir('../../');
+        if ($verbose) {
+            $thehtml .= "<hr />";
+        }
+    }
+
+
+    $thenow = new DateTime("now", new DateTimeZone('America/New_York'));
+    $thehtml .= "<p>Done at ".$thenow->format('m/d/Y, H:i:s')."</p>";
+    $thehtml .= "<h2><a href='/update-jsons/'>Return to the JSON Updates page</a></h2>";
+
+    if ($verbose) {
+        return $thehtml;
+    } else {
+        return;
+    }
+}
+
+
+
+function make_json_filetree() {
+    mkdir('sdss_org_wp_data/');
+    chdir('sdss_org_wp_data/');
+    $surveydirs = array('sdss4/', 'sdss5/');
+    foreach ($surveydirs as $thisdir) {
+        mkdir($thisdir);
+        chdir($thisdir);
+        mkdir('json/');
+        chdir('../');
+    }
+    chdir('../');
+    return;
+}
+
+
+function execThenPrint($command) {
+    $result = array();
+    exec($command, $result);
+    print("<pre>");
+    foreach ($result as $line) {
+        print($line . "\n");
+    }
+    print("</pre>");
+}
+
+
+
+
+
+function parse_file_permissions($perms) {
+    switch ($perms & 0xF000) {
+        case 0xC000: // socket
+            $info = 's';
+            break;
+        case 0xA000: // symbolic link
+            $info = 'l';
+            break;
+        case 0x8000: // regular
+            $info = 'r';
+            break;
+        case 0x6000: // block special
+            $info = 'b';
+            break;
+        case 0x4000: // directory
+            $info = 'd';
+            break;
+        case 0x2000: // character special
+            $info = 'c';
+            break;
+        case 0x1000: // FIFO pipe
+            $info = 'p';
+            break;
+        default: // unknown
+            $info = 'u';
+    }
+
+    // Owner
+    $info .= (($perms & 0x0100) ? 'r' : '-');
+    $info .= (($perms & 0x0080) ? 'w' : '-');
+    $info .= (($perms & 0x0040) ?
+                (($perms & 0x0800) ? 's' : 'x' ) :
+                (($perms & 0x0800) ? 'S' : '-'));
+
+    // Group
+    $info .= (($perms & 0x0020) ? 'r' : '-');
+    $info .= (($perms & 0x0010) ? 'w' : '-');
+    $info .= (($perms & 0x0008) ?
+                (($perms & 0x0400) ? 's' : 'x' ) :
+                (($perms & 0x0400) ? 'S' : '-'));
+
+    // World
+    $info .= (($perms & 0x0004) ? 'r' : '-');
+    $info .= (($perms & 0x0002) ? 'w' : '-');
+    $info .= (($perms & 0x0001) ?
+                (($perms & 0x0200) ? 't' : 'x' ) :
+                (($perms & 0x0200) ? 'T' : '-'));
+
+    return $info;
+}
+
+
 ?>

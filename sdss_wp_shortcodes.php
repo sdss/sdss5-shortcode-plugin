@@ -26,6 +26,7 @@
  *** 3.1.6.4. Trying git pull in git mode...
  *** 3.1.6.5. Saving JSON files into /files/sdss_org_wp_data/
  *** 3.1.6.6. Fixed location of JSON files in sdss_wp_shortcodes.php
+ *** 3.1.7. Moved to pull_json funciton; modified time of file in manual pull, seems to be working
  */
 
 require_once('affiliations.php');           // Show affiliations
@@ -39,7 +40,7 @@ require_once('sdss_toc.php');          // Show within-page table of contents
 require_once('sdss_to_top.php');          // Button to go to top of page
 /*require_once('sdss_readmore.php');          // Read more link for manual excerpts in news and blog posts */
 require_once('update_pull_json.php');                   // Make sure JSONs are up to date
-require_once('update_pull_json_manually.php');          // Make sure JSONs are up to date, manual option
+//require_once('update_pull_json_manually.php');          // Make sure JSONs are up to date, manual option
 
 
 add_shortcode( 'show_affiliations', 'show_affiliations');
