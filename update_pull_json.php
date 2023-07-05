@@ -6,7 +6,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {    // check whether form has been su
   $name = $_POST['proof'];       
   if (!empty($name)) {
       echo "<h1>Hello world!</h1>";
-      echo pull_json($verbose = True);  // verbose = True an html string, verbose = False return nothing
+      echo pull_json($branch = 'main', $verbose = True);  // verbose = True an html string, verbose = False return nothing
   }
 }
 
@@ -21,7 +21,7 @@ function show_json_updater() {
 }
 
 
-function pull_json( $verbose = True ) {
+function pull_json( $branch = 'main', $verbose = True ) {
     if ($verbose) {
         $thehtml = '';
     }
@@ -61,7 +61,7 @@ function pull_json( $verbose = True ) {
                 }
             }
             
-            $gitlink = 'https://raw.githubusercontent.com/sdss/sdss_org_wp_data/pantheon/'.$this_survey.'/json/'.$this_json_file.'.json';
+            $gitlink = 'https://raw.githubusercontent.com/sdss/sdss_org_wp_data/'.$branch.'/'.$this_survey.'/json/'.$this_json_file.'.json';
             $remote_file_contents = file_get_contents($gitlink);
             file_put_contents($localfilename, $remote_file_contents);
             $thehtml .= "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;replaced!";
