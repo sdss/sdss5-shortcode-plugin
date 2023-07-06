@@ -17,10 +17,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {    // check whether form has been su
             'display'  => esc_html__( 'Every Two Minutes' ), );
         return $schedules;
     }
-    add_action( 'sdss_pull_json_hook', 'sdss_pull_json' );
-    if ( ! wp_next_scheduled( 'sdss_pull_json_hook' ) ) {
-        wp_schedule_event( time(), 'every_two_minutes', 'sdss_pull_json_hook' );
-    }
+    //add_action( 'sdss_pull_json_hook', 'sdss_pull_json' );
+    //if ( ! wp_next_scheduled( 'sdss_pull_json_hook' ) ) {
+    //    wp_schedule_event( time(), 'every_two_minutes', 'sdss_pull_json_hook' );
+    //}
     // to unschedule, comment out the above three lines and uncomment these two lines
     //$timestamp = wp_next_scheduled( 'sdss_pull_json_hook' );
     //wp_unschedule_event( $timestamp, 'sdss_pull_json_hook' );
