@@ -1,13 +1,29 @@
 <?php
 
-// These first 20 lines are used by the page update-jsons
+// These first few lines decide whether this is a manual update or not
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {    // check whether form has been submitted
   $name = $_POST['proof'];       
   if (!empty($name)) {
       echo "<h1>Hello world!</h1>";
-      echo pull_json($branch = 'main', $verbose = True);  // verbose = True an html string, verbose = False return nothing
+      echo sdss_pull_json($branch = 'main', $verbose = True);  // verbose = True an html string, verbose = False return nothing
   }
+} else {
+    // set up wordpress cron to run the function pull_json below
+    add_filter( 'cron_schedules', 'add_cron_every_two_minutes' );
+    function add_cron_every_two_minutes( $schedules ) { 
+        $schedules['every_two_minutes'] = array(
+            'interval' => 120,
+            'display'  => esc_html__( 'Every Two Minutes' ), );
+        return $schedules;
+    }
+    add_action( 'sdss_pull_json_hook', 'sdss_pull_json' );
+    if ( ! wp_next_scheduled( 'sdss_pull_json_hook' ) ) {
+        wp_schedule_event( time(), 'every_two_minutes', 'sdss_pull_json_hook' );
+    }
+    // to unschedule, comment out the above three lines and uncomment these two lines
+    //$timestamp = wp_next_scheduled( 'sdss_pull_json_hook' );
+    //wp_unschedule_event( $timestamp, 'sdss_pull_json_hook' );
 }
 
 function show_json_updater() {
@@ -20,8 +36,7 @@ function show_json_updater() {
 	return $thehtml;
 }
 
-
-function pull_json( $branch = 'main', $verbose = True ) {
+function sdss_pull_json( $branch = 'pantheon', $verbose = False ) {
     if ($verbose) {
         $thehtml = '';
     }

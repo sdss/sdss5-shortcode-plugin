@@ -3,31 +3,12 @@
  * Plugin Name: SDSS Custom Shortcodes
  * Plugin URI: https://www.sdss5.org
  * Description: Functions for sdss.org: parse/display/update JSON content, display VACs, create TOCs
- * Version: 3.1.7.1
+ * Version: 3.1.8
  * Text Domain: sdss_wp_shortcodes
  * Author: Jordan Raddick
  * Author URI: https://www.jordanraddick.com
  * Version updates:
- *** 3.1.4. Manual update of JSON files works
- *** 3.1.4.1. Debugging file permission problem
- *** 3.1.4.2. Changing file permissions back and forth
- *** 3.1.4.3. Typo: chnod -> chmod
- *** 3.1.4.4. Gitignoring json files
- *** 3.1.4.5. Forgot semicolon fml
- *** 3.1.4.6. Better test of file permissions on json directories
- *** 3.1.4.7. Epic confusion, maybe I can't do this at all!
- *** 3.1.4.8. Trying git pull
- *** 3.1.4.9. Testing directory permissions in git mode
- *** 3.1.5.0. Testing git pull and git subtree pull in git mode
- *** 3.1.6.0. Starting over completely and putting files in the files directory
- *** 3.1.6.1. Removing local sdss_org_wp_data dir and using files directory instead per pantheon workflow
- *** 3.1.6.2. That, but actually doing the git rm of the sdss_org_wp_data dir
- *** 3.1.6.3. Listing files in files directory (now I know permissions are right)
- *** 3.1.6.4. Trying git pull in git mode...
- *** 3.1.6.5. Saving JSON files into /files/sdss_org_wp_data/
- *** 3.1.6.6. Fixed location of JSON files in sdss_wp_shortcodes.php
- *** 3.1.7. Moved to pull_json funciton; modified time of file in manual pull, seems to be working
- *** 3.1.7.1. Selected main branch of sdss_org_wp_data in github
+ *** 3.1.8. Definitely works for manual update, possibly for cron
  */
 
 require_once('affiliations.php');           // Show affiliations
