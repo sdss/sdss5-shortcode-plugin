@@ -45,3 +45,4 @@
  *** 3.1.7.1. Selected main branch of sdss_org_wp_data in github
  *** 3.1.8. Definitely works for manual update, possibly for cron
  *** 3.1.8.1. Commenting out cron stuff here, try adding in wp-crontrol
+ *** 3.1.8.2. Putting cron stuff back here, running every 2 minutes

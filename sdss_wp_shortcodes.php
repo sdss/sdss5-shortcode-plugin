@@ -3,13 +3,14 @@
  * Plugin Name: SDSS Custom Shortcodes
  * Plugin URI: https://www.sdss5.org
  * Description: Functions for sdss.org: parse/display/update JSON content, display VACs, create TOCs
- * Version: 3.1.8.1
+ * Version: 3.1.8.2
  * Text Domain: sdss_wp_shortcodes
  * Author: Jordan Raddick
  * Author URI: https://www.jordanraddick.com
  * Version updates:
  *** 3.1.8. Definitely works for manual update, possibly for cron
  *** 3.1.8.1. Commenting out cron stuff here, try adding in wp-crontrol
+ *** 3.1.8.2. Putting cron stuff back here, running every 2 minutes
  */
 
 require_once('affiliations.php');           // Show affiliations
@@ -23,7 +24,6 @@ require_once('sdss_toc.php');          // Show within-page table of contents
 require_once('sdss_to_top.php');          // Button to go to top of page
 /*require_once('sdss_readmore.php');          // Read more link for manual excerpts in news and blog posts */
 require_once('update_pull_json.php');                   // Make sure JSONs are up to date
-//require_once('update_pull_json_manually.php');          // Make sure JSONs are up to date, manual option
 
 
 add_shortcode( 'show_affiliations', 'show_affiliations');
