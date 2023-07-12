@@ -46,3 +46,4 @@
  *** 3.1.8. Definitely works for manual update, possibly for cron
  *** 3.1.8.1. Commenting out cron stuff here, try adding in wp-crontrol
  *** 3.1.8.2. Putting cron stuff back here, running every 2 minutes
+ *** 3.2. Merged new code location into main branch
