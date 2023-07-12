@@ -17,3 +17,7 @@ wp-content/plugins/hello.php
 /sitemap.xml
 /sitemap.xml.gz
 
+.vs
+
+sdss_org_wp_data/sdss4/json/*.json
+sdss_org_wp_data/sdss5/json/*.json
