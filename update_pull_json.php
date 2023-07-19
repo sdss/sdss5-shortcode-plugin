@@ -16,11 +16,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {    // check whether form has been su
             'interval' => 120,
             'display'  => esc_html__( 'Every Two Minutes' ), );
         return $schedules;
+    } 
+    add_action( 'sdss_pull_json_hook', 'sdss_pull_json' );
+    if ( ! wp_next_scheduled( 'sdss_pull_json_hook' ) ) {
+        wp_schedule_event( time(), 'every_two_minutes', 'sdss_pull_json_hook' );
     }
-    //add_action( 'sdss_pull_json_hook', 'sdss_pull_json' );
-    //if ( ! wp_next_scheduled( 'sdss_pull_json_hook' ) ) {
-    //    wp_schedule_event( time(), 'every_two_minutes', 'sdss_pull_json_hook' );
-    //}
     // to unschedule, comment out the above three lines and uncomment these two lines
     //$timestamp = wp_next_scheduled( 'sdss_pull_json_hook' );
     //wp_unschedule_event( $timestamp, 'sdss_pull_json_hook' );
@@ -36,7 +36,7 @@ function show_json_updater() {
 	return $thehtml;
 }
 
-function sdss_pull_json( $branch = 'pantheon', $verbose = False ) {
+function sdss_pull_json( $branch = 'main', $verbose = False ) {
     if ($verbose) {
         $thehtml = '';
     }
@@ -87,8 +87,6 @@ function sdss_pull_json( $branch = 'pantheon', $verbose = False ) {
         if ($verbose) {
             $thehtml .= "<hr />";
         }
-    }
-
 
     $thenow = new DateTime("now", new DateTimeZone('America/New_York'));
     $thehtml .= "<p>Done at ".$thenow->format('m/d/Y, H:i:s')."</p>";
@@ -116,72 +114,4 @@ function make_json_filetree() {
     chdir('../');
     return;
 }
-
-
-function execThenPrint($command) {
-    $result = array();
-    exec($command, $result);
-    print("<pre>");
-    foreach ($result as $line) {
-        print($line . "\n");
-    }
-    print("</pre>");
-}
-
-
-
-
-
-function parse_file_permissions($perms) {
-    switch ($perms & 0xF000) {
-        case 0xC000: // socket
-            $info = 's';
-            break;
-        case 0xA000: // symbolic link
-            $info = 'l';
-            break;
-        case 0x8000: // regular
-            $info = 'r';
-            break;
-        case 0x6000: // block special
-            $info = 'b';
-            break;
-        case 0x4000: // directory
-            $info = 'd';
-            break;
-        case 0x2000: // character special
-            $info = 'c';
-            break;
-        case 0x1000: // FIFO pipe
-            $info = 'p';
-            break;
-        default: // unknown
-            $info = 'u';
-    }
-
-    // Owner
-    $info .= (($perms & 0x0100) ? 'r' : '-');
-    $info .= (($perms & 0x0080) ? 'w' : '-');
-    $info .= (($perms & 0x0040) ?
-                (($perms & 0x0800) ? 's' : 'x' ) :
-                (($perms & 0x0800) ? 'S' : '-'));
-
-    // Group
-    $info .= (($perms & 0x0020) ? 'r' : '-');
-    $info .= (($perms & 0x0010) ? 'w' : '-');
-    $info .= (($perms & 0x0008) ?
-                (($perms & 0x0400) ? 's' : 'x' ) :
-                (($perms & 0x0400) ? 'S' : '-'));
-
-    // World
-    $info .= (($perms & 0x0004) ? 'r' : '-');
-    $info .= (($perms & 0x0002) ? 'w' : '-');
-    $info .= (($perms & 0x0001) ?
-                (($perms & 0x0200) ? 't' : 'x' ) :
-                (($perms & 0x0200) ? 'T' : '-'));
-
-    return $info;
-}
-
-
 ?>

@@ -3,12 +3,13 @@
  * Plugin Name: SDSS Custom Shortcodes
  * Plugin URI: https://www.sdss5.org
  * Description: Functions for sdss.org: parse/display/update JSON content, display VACs, create TOCs
- * Version: 3.3
+ * Version: 3.3.1
  * Text Domain: sdss_wp_shortcodes
  * Author: Jordan Raddick
  * Author URI: https://www.jordanraddick.com
  * Version updates:
  *** 3.3. Added affiliations cases for sdss4/sdss5, moved json locations out of here into wp-config.php
+ *** 3.3.1. Fixed parentheses bug in update pull json and deleted some debug lines
  */
 
 require_once('affiliations.php');           // Show affiliations
