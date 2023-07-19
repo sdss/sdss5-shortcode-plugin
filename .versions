@@ -49,3 +49,4 @@
  *** 3.2. Merged new code location into main branch
  *** 3.3. Added affiliations cases for sdss4/sdss5, moved json locations out of here into wp-config.php
  *** 3.3.1. Fixed parentheses bug in update pull json and deleted some debug lines
+ *** 3.3.2. Restored stupid lost curly brace in update pull json

@@ -87,7 +87,7 @@ function sdss_pull_json( $branch = 'main', $verbose = False ) {
         if ($verbose) {
             $thehtml .= "<hr />";
         }
-
+    }
     $thenow = new DateTime("now", new DateTimeZone('America/New_York'));
     $thehtml .= "<p>Done at ".$thenow->format('m/d/Y, H:i:s')."</p>";
     $thehtml .= "<h2><a href='/update-jsons/'>Return to the JSON Updates page</a></h2>";
