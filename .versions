@@ -52,3 +52,4 @@
  *** 3.3.2. Restored stupid lost curly brace in update pull json
  *** 3.4. Fixed key people and got needed json files
  *** 3.5. Added page for Science Advisory Council; renamed fcn call from pull_json to sdss_pull_json
+ *** 3.5.0.1 Fixed stupid missing }

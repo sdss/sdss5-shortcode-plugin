@@ -2,7 +2,7 @@
 function show_ac( $thearguments ) {
 	if (WHICH_PHASE == 'sdss5') {
 		$path = PATH_JSON;
-	elseif (WHICH_PHASE == 'sdss4') {
+	} elseif (WHICH_PHASE == 'sdss4') {
 		return "No science advisory council for SDSS4";
 	} else {
 		$path = PATH_JSON;
