@@ -51,3 +51,4 @@
  *** 3.3.1. Fixed parentheses bug in update pull json and deleted some debug lines
  *** 3.3.2. Restored stupid lost curly brace in update pull json
  *** 3.4. Fixed key people and got needed json files
+ *** 3.5. Added page for Science Advisory Council; renamed fcn call from pull_json to sdss_pull_json

@@ -3,16 +3,17 @@
  * Plugin Name: SDSS Custom Shortcodes
  * Plugin URI: https://www.sdss5.org
  * Description: Functions for sdss.org: parse/display/update JSON content, display VACs, create TOCs
- * Version: 3.4
+ * Version: 3.5
  * Text Domain: sdss_wp_shortcodes
  * Author: Jordan Raddick
  * Author URI: https://www.jordanraddick.com
  * Version updates:
- *** 3.4. Fixed Key People and got needed JSON files
+ *** 3.5. Added page for Science Advisory Council; renamed fcn call from pull_json to sdss_pull_json
  */
 
 require_once('affiliations.php');           // Show affiliations
 require_once('coco.php');           // Show CoCo
+require_once('ac.php');           // Show advisory council
 require_once('publications.php');           // Show publications
 require_once('architects.php');           // Show architects
 require_once('roles.php');           // Show roles
@@ -26,6 +27,7 @@ require_once('update_pull_json.php');                   // Make sure JSONs are u
 
 add_shortcode( 'show_affiliations', 'show_affiliations');
 add_shortcode( 'show_coco', 'show_coco');
+add_shortcode( 'show_ac', 'show_ac');
 add_shortcode( 'show_publications', 'show_publications');
 add_shortcode( 'show_architects', 'show_architects');
 add_shortcode( 'show_roles', 'show_roles');
@@ -34,6 +36,6 @@ add_shortcode( 'show_toc', 'show_toc' );
 add_shortcode( 'to_top', 'sdss_to_top' );
 add_shortcode( 'vac_search', 'vac_search');
 //add_shortcode( 'readmore', 'read_more_in_excerpt');
-add_shortcode( 'update_pull_json', 'pull_json' );
+add_shortcode( 'update_pull_json', 'sdss_pull_json' );
 add_shortcode( 'update_pull_json_manually', 'show_json_updater' );
 ?>

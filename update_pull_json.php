@@ -52,7 +52,7 @@ function sdss_pull_json( $branch = 'main', $verbose = False ) {
         make_json_filetree();
     }
     $surveys = array("sdss4", "sdss5");
-    $jsonfiles = array('affiliations', 'architects', 'coco', 'project', 'publications', 'roles', 'vacs', 'leaders', 'members', 'mc');
+    $jsonfiles = array('affiliations', 'architects', 'coco', 'project', 'publications', 'roles', 'vacs', 'leaders', 'members', 'mc', 'sdss5-ac');
     chdir('sdss_org_wp_data/');
     foreach ($surveys as $this_survey) {
         if ($verbose) {
@@ -98,8 +98,6 @@ function sdss_pull_json( $branch = 'main', $verbose = False ) {
         return;
     }
 }
-
-
 
 function make_json_filetree() {
     mkdir('sdss_org_wp_data/');
