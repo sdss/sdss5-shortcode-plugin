@@ -1,5 +1,8 @@
 <?php
 function show_ac( $thearguments ) {
+
+	$searchval = "Xi'aowei Liu"; // remove this name from display
+
 	if (WHICH_PHASE == 'sdss5') {
 		$path = PATH_JSON;
 	} elseif (WHICH_PHASE == 'sdss4') {
@@ -9,13 +12,20 @@ function show_ac( $thearguments ) {
 	}
 
 	$ac_data_json = @file_get_contents(  $path . 'sdss5-ac.json' );
-	
 	$ac_data = json_decode( $ac_data_json, true );
 
+	$thenames = array();
+	foreach ($ac_data as $thisrow) {
+		array_push($thenames, $thisrow['name']);
+	}
+	$pos = array_search($searchval, $thenames);
+	unset($thenames[$pos]);
+
+	$thehtml = "";
 	$thehtml .= "<h2>Members</h2>";
 	$thehtml .= "<ul>";
-	foreach ($ac_data as $x) {
-		$thehtml .= "<li>".$x['name']."</li>";
+	foreach ($thenames as $x) {
+		$thehtml .= "<li>".$x."</li>";
 	}
 	$thehtml .= "</ul>";
 	

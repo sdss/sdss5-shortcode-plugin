@@ -10,6 +10,7 @@
  * Version updates:
  *** 3.5. Added page for Science Advisory Council; renamed fcn call from pull_json to sdss_pull_json
  *** 3.5.0.1 Fixed stupid missing }
+ *** 3.5.1. Removed duplicate-ish name from Advisory Council page
  */
 
 require_once('affiliations.php');           // Show affiliations
