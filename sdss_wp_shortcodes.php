@@ -3,14 +3,13 @@
  * Plugin Name: SDSS Custom Shortcodes
  * Plugin URI: https://www.sdss5.org
  * Description: Functions for sdss.org: parse/display/update JSON content, display VACs, create TOCs
- * Version: 3.5.0.1
+ * Version: 3.5.2
  * Text Domain: sdss_wp_shortcodes
  * Author: Jordan Raddick
  * Author URI: https://www.jordanraddick.com
  * Version updates:
  *** 3.5. Added page for Science Advisory Council; renamed fcn call from pull_json to sdss_pull_json
- *** 3.5.0.1 Fixed stupid missing }
- *** 3.5.1. Removed duplicate-ish name from Advisory Council page
+ *** 3.5.2. Fixed OBOE in Advisory Council page
  */
 
 require_once('affiliations.php');           // Show affiliations

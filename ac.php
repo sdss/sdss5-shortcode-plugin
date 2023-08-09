@@ -14,12 +14,11 @@ function show_ac( $thearguments ) {
 	$ac_data_json = @file_get_contents(  $path . 'sdss5-ac.json' );
 	$ac_data = json_decode( $ac_data_json, true );
 
+	// Extract member names from JSON
 	$thenames = array();
 	foreach ($ac_data as $thisrow) {
 		array_push($thenames, $thisrow['name']);
 	}
-	$pos = array_search($searchval, $thenames);
-	unset($thenames[$pos]);
 
 	$thehtml = "";
 	$thehtml .= "<h2>Members</h2>";
