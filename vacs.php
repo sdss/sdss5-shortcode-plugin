@@ -2,10 +2,10 @@
 
 function show_vacs( $thearguments ) {
 
-	$debug = ( defined( 'WP_DEBUG' ) && ( WP_DEBUG ) );
+	$sdss_debug = WP_DEBUG;
+	//$sdss_debug = false;
 	$current_dr_number = CURRENT_DR;
 	$current_dr = "DR".strval($current_dr_number);
-
 
 	$vacs_data_json = @file_get_contents(  PATH_JSON_VACS . 'vacs.json' );
 	$vacs_data = json_decode( $vacs_data_json, true );
@@ -28,15 +28,15 @@ function show_vacs( $thearguments ) {
 	$thehtml = "";
 
 	if ( $single_id == -1 ) {
-		$thehtml = show_all_vacs($all_vacs, $thehtml, $vacs_data['modified'], $current_dr, $debug);
+		$thehtml = show_all_vacs($all_vacs, $thehtml, $vacs_data['modified'], $current_dr, $sdss_debug);
 	} else {
-		$thehtml = show_single_vac($all_vacs[$single_id], $thehtml, $current_dr, $debug);
+		$thehtml = show_single_vac($all_vacs[$single_id], $thehtml, $current_dr, $sdss_debug);
 	}
 
 	return $thehtml;
 }
 
-function show_all_vacs($all_vacs, $thehtml, $last_modified, $current_dr, $debug) {
+function show_all_vacs($all_vacs, $thehtml, $last_modified, $current_dr, $sdss_debug) {
 
 	$thethml = "";
 	$thehtml .= "<div class='vaclist'>";
@@ -54,7 +54,7 @@ function show_all_vacs($all_vacs, $thehtml, $last_modified, $current_dr, $debug)
 		$thehtml .= "<h2>";
 		$thehtml .= "<a href='".$_SERVER['REQUEST_URI']."?vac_id=".$thisvac['id']."'>";
 
-		if ($debug) {
+		if ($sdss_debug) {
 			if (in_array($current_dr, $thisvac['data_releases'])) {
 				$thehtml .= $thisvac['identifier'].": ";	
 			} else {
@@ -143,7 +143,7 @@ function show_all_vacs($all_vacs, $thehtml, $last_modified, $current_dr, $debug)
 	return $thehtml;
 }
 
-function show_single_vac($thisvac, $thehtml, $current_dr, $debug) {
+function show_single_vac($thisvac, $thehtml, $current_dr, $sdss_debug) {
 
 	
 	$sas_base = "https://data.sdss.org";
@@ -156,7 +156,7 @@ function show_single_vac($thisvac, $thehtml, $current_dr, $debug) {
 	$thehtml .= "<h2>";
 	//$thehtml .= "<a href='".$_SERVER['REQUEST_URI']."?vac_id=".$thisvac['id']."'>";
 
-	if ($debug) {
+	if ($sdss_debug) {
 		if (in_array($current_dr, $thisvac['data_releases'])) {//(!strpos($thisvac['identifier'], 'V VAC')) {
 			$thehtml .= $thisvac['identifier'].": ";	
 		} else {
@@ -297,13 +297,13 @@ function show_single_vac($thisvac, $thehtml, $current_dr, $debug) {
 
 
 	// PUBLICATIONS (if any)
-
+	/*
 	if ($thisvac['publication_ids'] != "") {
 		$thehtml .= "<div class='vac-pubs'>";
 		$thehtml .= "<h3>Publications</h3>";
-		$thehtml .= get_publications_text($thisvac['publication_ids'], $debug);
+		$thehtml .= get_publications_text($thisvac['publication_ids'], $sdss_debug);
 		$thehtml .= "</div>";
-	}
+	} */
 
 		$thehtml .= "<p><strong>Catalog last modified:</strong> ".$thisvac['modified']."</p>";
 
@@ -324,7 +324,7 @@ function get_single_id_from_url($theuri) {
 	return $single_id;
 }
 
-function get_publications_text($pub_ids_array, $debug) {
+function get_publications_text($pub_ids_array, $sdss_debug) {
 
 	$publications_data_json = @file_get_contents(  PATH_JSON . 'publications.json' );
     $publications_data = json_decode( $publications_data_json, true );
@@ -386,7 +386,7 @@ function get_publications_text($pub_ids_array, $debug) {
 
 			$pubhtml .= "</ul>";  // end of list of VAC publications
 		} else {
-			if ($debug) {
+			if ($sdss_debug) {
 				$pubhtml .= "DEBUG MODE: PUBLICATION ID ".$thispubid." NOT FOUND!";
 			} 
 		}

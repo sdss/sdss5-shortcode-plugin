@@ -20,7 +20,7 @@ function show_roles() {
         $thehtml .= "<p>Last modified: " . $roles_data['modified'] . "</p>";
     } elseif (WHICH_PHASE == 'sdss4') {
 
-        $debug = false;
+        $sdss_debug = false;
         $fullname_source = 'members';   // "members" gets fullames from members.json; "roles" gets fullnames from roles.json (per Jordan & Joel); if neither, name is "NAME NOT FOUND"
 
         $leaders_data_json = @file_get_contents(  PATH_JSON . 'leaders.json' );
@@ -35,7 +35,7 @@ function show_roles() {
         $mc_data_json = @file_get_contents(  PATH_JSON . 'mc.json' );
         $mc_data = json_decode( $mc_data_json, true);
 
-        if ($debug) {
+        if ($sdss_debug) {
             $thehtml .= "<h2>Current page encoding: ".mb_internal_encoding()."</h2>";
             $thehtml .= "<h2>File encoding before conversion: ".mb_detect_encoding($leaders_data_json)."</h2>";
             $leaders_data_json = mb_convert_encoding($leaders_data_json, 'UTF-8', mb_detect_encoding($leaders_data_json, 'UTF-8, ISO-8859-1', true));
@@ -51,38 +51,38 @@ function show_roles() {
         foreach ($roles_data['roles'] as $thisrow) {
             if ($listlevel == 0) {
                 $thehtml .= "<ul>";
-                if ($debug) $thehtml .= "<li>UL</li>";
+                if ($sdss_debug) $thehtml .= "<li>UL</li>";
                 $listlevel = 1;
             } elseif ($listlevel < $thisrow['level']) {
                 $thehtml .= "<ul>";
-                if ($debug) $thehtml .= "<li>UL</li>";
-                if ($debug) print('<li>GOING DOWN...</li>');
+                if ($sdss_debug) $thehtml .= "<li>UL</li>";
+                if ($sdss_debug) print('<li>GOING DOWN...</li>');
                 $listlevel = $thisrow['level'];
             } elseif ($listlevel > $thisrow['level']) {
                 while ($listlevel > $thisrow['level']) {
-                    if ($debug) $thehtml .= "<li>listlevel = ".$listlevel."; lv = ".$thisrow['level']."; GOING UP...</li>";
+                    if ($sdss_debug) $thehtml .= "<li>listlevel = ".$listlevel."; lv = ".$thisrow['level']."; GOING UP...</li>";
                     $thehtml .= "</ul>";
-                    if ($debug) $thehtml .= "<li>/UL</li>";
+                    if ($sdss_debug) $thehtml .= "<li>/UL</li>";
                     $listlevel = $listlevel - 1;
                 }
             }
             $thehtml .= "<li>";
-            if ($debug) $thehtml .= "listlevel = ".$listlevel."; lv = ".$thisrow['level']."; ";
-            if ($debug) {
+            if ($sdss_debug) $thehtml .= "listlevel = ".$listlevel."; lv = ".$thisrow['level']."; ";
+            if ($sdss_debug) {
                 for ($i = 0; $i < $thisrow['level']; $i++) {
                     $thehtml .= "&nbsp;&nbsp;li-";
                 }
             }
             $thehtml .= $thisrow['role'];
-            if ($debug) $thehtml .= " (role_id = ".$thisrow['role_id'].")";
+            if ($sdss_debug) $thehtml .= " (role_id = ".$thisrow['role_id'].")";
             $thehtml .= ": <strong>";
-            $the_member_ids = searchForRoleID($thisrow['role_id'], $leaders_data['leaders'], $debug);
-            $names_from_roles_array = namesFromRolesArray($thisrow['role_id'], $leaders_data['leaders'], $debug);
+            $the_member_ids = searchForRoleID($thisrow['role_id'], $leaders_data['leaders'], $sdss_debug);
+            $names_from_roles_array = namesFromRolesArray($thisrow['role_id'], $leaders_data['leaders'], $sdss_debug);
 
             for ($i = 0; $i <= count($the_member_ids) - 1; $i++) {
                 if ($i > 0) $thehtml .= ", ";
                 $this_member_id = $the_member_ids[$i];
-                $this_name = searchForMemberID($this_member_id, $members_data['members'], $debug);
+                $this_name = searchForMemberID($this_member_id, $members_data['members'], $sdss_debug);
 
                 // Special case fixes - see Mike Blanton email of 2019-12-03
                 if ($this_member_id == 609) $this_name = "Bruce A. Gillespie"; 
@@ -98,17 +98,17 @@ function show_roles() {
                     $thehtml .= "NAME NOT FOUND";
                 }
 
-                if ($debug) $thehtml .= " (member_id = ".$this_member_id.")";
-                $this_member_is_mc = isMC($this_member_id, $mc_data['mc'], $debug);
+                if ($sdss_debug) $thehtml .= " (member_id = ".$this_member_id.")";
+                $this_member_is_mc = isMC($this_member_id, $mc_data['mc'], $sdss_debug);
                 if ($this_member_is_mc && $this_name <> "VACANT") $thehtml .= "*";
             }
             $thehtml .= "</strong>";
 
             $thehtml .= "</li>";
         }
-        if ($debug) $thehtml .= "<li>listlevel = ".$listlevel."</li>";
+        if ($sdss_debug) $thehtml .= "<li>listlevel = ".$listlevel."</li>";
         while ($listlevel > 0) {
-            if ($debug) $thehtml .= "<li>/UL</li>";
+            if ($sdss_debug) $thehtml .= "<li>/UL</li>";
             $thehtml .= "</ul>";
             $listlevel = $listlevel - 1;
         }
@@ -118,7 +118,7 @@ function show_roles() {
         $members_last_modified = $members_data['modified'];
         $mc_last_modified = $mc_data['modified'];
 
-        if ($debug) {
+        if ($sdss_debug) {
             $thehtml .= "Leaders last modified: ".$leaders_last_modified."<br />";
             $thehtml .= "Roles last modified: ".$leaders_last_modified."<br />";
             $thehtml .= "Members last modified: ".$leaders_last_modified."<br />";
@@ -143,7 +143,7 @@ function show_roles() {
 
 
 // Functions needed for sdss4 display
-function searchForRoleID($id, $array, $debug_in_fcn) {
+function searchForRoleID($id, $array, $sdss_debug_in_fcn) {
     $returnArray = Array();
     foreach ($array as $thisrow) {
         if ($thisrow['role_id'] === $id && $thisrow['current'] == 1) {
@@ -151,7 +151,7 @@ function searchForRoleID($id, $array, $debug_in_fcn) {
         }
     }
     if (count($returnArray) == 0) {
-        if ($debug_in_fcn) {
+        if ($sdss_debug_in_fcn) {
             array_push($returnArray, "NOT FOUND!!!!");
         } else {
             array_push($returnArray, "");
@@ -160,7 +160,7 @@ function searchForRoleID($id, $array, $debug_in_fcn) {
     return $returnArray;
 }
 
-function searchForMemberID($id, $array, $debug_in_fcn) {
+function searchForMemberID($id, $array, $sdss_debug_in_fcn) {
     foreach ($array as $thisrow) {
         if ($thisrow['member_id'] == $id) {
             return $thisrow['fullname'];
@@ -169,7 +169,7 @@ function searchForMemberID($id, $array, $debug_in_fcn) {
     return "";//"VACANT";
 }
 
-function namesFromRolesArray($id, $array, $debug_in_fcn) {
+function namesFromRolesArray($id, $array, $sdss_debug_in_fcn) {
     $returnArray = Array();
     foreach ($array as $thisrow) {
         if ($thisrow['role_id'] === $id && $thisrow['current'] == 1) {
@@ -177,7 +177,7 @@ function namesFromRolesArray($id, $array, $debug_in_fcn) {
         }
     }
     if (count($returnArray) == 0) {
-        if ($debug_in_fcn) {
+        if ($sdss_debug_in_fcn) {
             array_push($returnArray, "NOT FOUND!!!!");
         } else {
             array_push($returnArray, "");
@@ -186,7 +186,7 @@ function namesFromRolesArray($id, $array, $debug_in_fcn) {
     return $returnArray;
 }
 
-function isMC($id, $array, $debug_in_fcn) {
+function isMC($id, $array, $sdss_debug_in_fcn) {
     foreach ($array as $thisrow) {
         if ($thisrow['member_id'] == $id) {
             return true;
