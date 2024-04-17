@@ -293,8 +293,7 @@ function show_single_vac($thisvac, $thehtml, $current_dr, $sdss_debug) {
 
 	/// ABSTRACT
 	$thehtml .= "<h3>Abstract</h3>";
-	$thehtml .= "<p>".$thisvac['abstract']."</p>";
-
+	$thehtml .= "<p class='single-vac-abstract'>".$thisvac['abstract']."</p>";
 
 	// PUBLICATIONS (if any)
 	/*
