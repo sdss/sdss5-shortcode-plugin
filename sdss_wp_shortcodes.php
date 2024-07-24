@@ -3,12 +3,13 @@
  * Plugin Name: SDSS Custom Shortcodes
  * Plugin URI: https://www.sdss5.org
  * Description: Functions for sdss.org: parse/display/update JSON content, display VACs, create TOCs
- * Version: 3.7
+ * Version: 3.7.1
  * Text Domain: sdss_wp_shortcodes
  * Author: Jordan Raddick
  * Author URI: https://www.jordanraddick.com
  * Version updates:
  *** 3.7. Added class .single-vac-abstract to abstract to enable paragraph breaks
+ *** 3.7.1. Removed annyoing error message about proof
  */
 
 require_once('affiliations.php');           // Show affiliations
