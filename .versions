@@ -58,3 +58,4 @@
  *** 3.6. Removed publications from single vac page; vac id now only appears on dev
  *** 3.7. Added class .single-vac-abstract to abstract to enable paragraph breaks
  *** 3.7.1. Removed annyoing error message about proof
+ *** 3.7.2. Restored "proof" check before running sdss_pull_json to fix a weird error

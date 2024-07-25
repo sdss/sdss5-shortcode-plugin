@@ -3,8 +3,11 @@
 // These first few lines decide whether this is a manual update or not
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {    // check whether form has been submitted
-    echo "<h1>Hello world!</h1>";
-    echo sdss_pull_json($branch = 'main', $verbose = True);  // verbose = True an html string, verbose = False return nothing
+    $name = $_POST['proof'];       
+    if (!empty($name)) {
+        echo "<h1>Hello world!</h1>";
+        echo sdss_pull_json($branch = 'main', $verbose = True);  // verbose = True an html string, verbose = False return nothing
+    }
 } else {
     // set up wordpress cron to run the function pull_json below
     add_filter( 'cron_schedules', 'add_cron_every_two_minutes' );
@@ -25,6 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {    // check whether form has been su
 
 function show_json_updater() {
     $thehtml .= "<form action='/wp-content/plugins/sdss_wp_shortcodes/update_pull_json.php' method='post'>";
+    $thehtml .= "<input type='hidden' id='proof' name='proof' value=True>";
     $thehtml .= '<div class="clearfix"></div>';
 	$thehtml .= "<input type='submit' value='Update JSON files'>";
 	$thehtml .= '<div class="clearfix"></div>';
