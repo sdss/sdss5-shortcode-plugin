@@ -3,11 +3,12 @@
 function show_vacs( $thearguments ) {
 
 	$sdss_debug = WP_DEBUG;
-	//$sdss_debug = false;
 	$current_dr_number = CURRENT_DR;
 	$current_dr = "DR".strval($current_dr_number);
 
-	if (WP_DEBUG == 1) {
+	$requested_page_arr = explode('/',$_SERVER['REQUEST_URI']);   // get page requested (relative to top level)
+	
+	if (($sdss_debug == 1) & (strtoupper($requested_page_arr[1]) == $current_dr)) {
 		$vacs_data_json = @file_get_contents(  PATH_JSON_VACS . 'vacs-testng.json' );
 	} else {
 		$vacs_data_json = @file_get_contents(  PATH_JSON_VACS . 'vacs.json' );

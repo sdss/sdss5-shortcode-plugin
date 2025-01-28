@@ -9,7 +9,8 @@
  * Author URI: https://www.jordanraddick.com
  * Version updates:
  *** 4.0. New Day Zero for everything on sdss.org
- *** 4.1. Display DR19 VACS on testng site
+ *** 4.1. Display DR19 VACs on testng site
+ *** 4.1.1. Display DR19 VACs only on DR19 VAC page (not DR18) 
  */
 
 require_once('affiliations.php');           // Show affiliations

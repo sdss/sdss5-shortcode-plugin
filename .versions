@@ -61,3 +61,4 @@
  *** 3.7.2. Restored "proof" check before running sdss_pull_json to fix a weird error
  *** 4.0. New Day Zero for everything on sdss.org
  *** 4.1. Display DR19 VACS on testng site
+ *** 4.1.1. Display DR19 VACs only on DR19 VAC page (not DR18) 
