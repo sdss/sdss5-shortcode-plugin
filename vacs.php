@@ -7,7 +7,11 @@ function show_vacs( $thearguments ) {
 	$current_dr_number = CURRENT_DR;
 	$current_dr = "DR".strval($current_dr_number);
 
-	$vacs_data_json = @file_get_contents(  PATH_JSON_VACS . 'vacs.json' );
+	if (WP_DEBUG == 1) {
+		$vacs_data_json = @file_get_contents(  PATH_JSON_VACS . 'vacs-testng.json' );
+	} else {
+		$vacs_data_json = @file_get_contents(  PATH_JSON_VACS . 'vacs.json' );
+	}
 	$vacs_data = json_decode( $vacs_data_json, true );
 	
 	if ((strpos($_SERVER['REQUEST_URI'], 'vac_id')) > 0) {

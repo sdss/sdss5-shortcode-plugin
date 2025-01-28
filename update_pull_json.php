@@ -27,7 +27,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {    // check whether form has been su
 }
 
 function show_json_updater() {
-    $thehtml .= "<form action='/wp-content/plugins/sdss_wp_shortcodes/update_pull_json.php' method='post'>";
+    $thehtml = "<form action='/wp-content/plugins/sdss_wp_shortcodes/update_pull_json.php' method='post'>";
     $thehtml .= "<input type='hidden' id='proof' name='proof' value=True>";
     $thehtml .= '<div class="clearfix"></div>';
 	$thehtml .= "<input type='submit' value='Update JSON files'>";
@@ -52,7 +52,7 @@ function sdss_pull_json( $branch = 'main', $verbose = False ) {
         make_json_filetree();
     }
     $surveys = array("sdss4", "sdss5");
-    $jsonfiles = array('affiliations', 'architects', 'coco', 'project', 'publications', 'roles', 'vacs', 'leaders', 'members', 'mc', 'sdss5-ac');
+    $jsonfiles = array('affiliations', 'architects', 'coco', 'project', 'publications', 'roles', 'vacs', 'vacs-testng', 'leaders', 'members', 'mc', 'sdss5-ac');
     chdir('sdss_org_wp_data/');
     foreach ($surveys as $this_survey) {
         if ($verbose) {

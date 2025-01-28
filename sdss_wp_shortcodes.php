@@ -9,6 +9,7 @@
  * Author URI: https://www.jordanraddick.com
  * Version updates:
  *** 4.0. New Day Zero for everything on sdss.org
+ *** 4.1. Display DR19 VACS on testng site
  */
 
 require_once('affiliations.php');           // Show affiliations
